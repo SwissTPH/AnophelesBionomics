@@ -15,7 +15,7 @@ The package depends on several R libraries for core functionality, including `rs
 To install the development version of the package:
 
 ```r
-# Install from GitHub (if hosted there)
+# Install from GitHub
 # install.packages("devtools")
 devtools::install_github("SwissTPH/AnophelesBionomics", build_vignettes = TRUE)
 ```
