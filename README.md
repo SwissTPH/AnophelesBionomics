@@ -12,7 +12,7 @@ The package depends on several R libraries for core functionality, including `rs
 
 ## Installation
 
-To install the development version of the package:
+To install the package:
 
 ```r
 # Install from GitHub
