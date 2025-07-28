@@ -1095,12 +1095,6 @@ Bionomics_For_Anophles_Model <- function() {
     colnames(out)[colnames(out) == "variance"] <- paste0(varname, "_variance")
 
 
-    idx_jamesii <- which(out$species_name == "Jamesii complex")
-    if (length(idx_jamesii) > 1) {
-       idx_to_remove <- sample(idx_jamesii, 1)
-        out <- out[-idx_to_remove, ]
-        }
-
     return(out)
   }
 
@@ -1141,8 +1135,22 @@ Bionomics_For_Anophles_Model <- function() {
     }
   }
 
+
+idx_jamesii <- which(final_df$species_name == "Jamesii complex")
+if (length(idx_jamesii) > 1) {
+       idx_to_remove <- sample(idx_jamesii, 1)
+        final_df <- final_df[-idx_to_remove, ]
+        }
+  
   final_df <- final_df |>
       dplyr::select(-Chi.sd)
+
+  genus_row <- which(final_df$species_name == "GENUS") 
+  
+  final_df[] <- lapply(final_df, function(x) {
+    x[is.na(x)] <- x[genus_row] 
+    return(x)
+  })
 
   return(final_df)
 }
