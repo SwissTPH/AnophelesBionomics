@@ -1151,6 +1151,19 @@ if (length(idx_jamesii) > 1) {
     x[is.na(x)] <- x[genus_row] 
     return(x)
   })
+  
+  final_df$zeta.3 <- 1 
+  final_df$td <- 0.33
+  final_df$tau <- 3 
+  final_df$ts <- 10
+  final_df$to <- 5    
+
+  desired_order <- c("species_name", "M", "M.sd", "Chi", 
+                   "A0", "A0.sd", "zeta.3", "td", 
+                   "tau", "ts", "to", "endophily", 
+                   "endophily.sd", "endophagy", "endophagy.sd")
+
+  final_df <- final_df[, desired_order]
 
   return(final_df)
 }
