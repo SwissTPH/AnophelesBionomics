@@ -1095,10 +1095,10 @@ Bionomics_For_Anophles_Model <- function() {
     colnames(out)[colnames(out) == "variance"] <- paste0(varname, "_variance")
 
 
-    idx_jamesii <- which(datafra$species_name == "Jamesii complex")
+    idx_jamesii <- which(out$species_name == "Jamesii complex")
     if (length(idx_jamesii) > 1) {
        idx_to_remove <- sample(idx_jamesii, 1)
-        datafra <- datafra[-idx_to_remove, ]
+        out <- out[-idx_to_remove, ]
         }
 
     return(out)
