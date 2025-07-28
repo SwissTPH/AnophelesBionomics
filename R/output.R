@@ -1141,7 +1141,7 @@ Bionomics_For_Anophles_Model <- function() {
     }
   }
 
-  df_final <- final_df |>
+  final_df <- final_df |>
       dplyr::select(-Chi.sd)
 
   return(final_df)
