@@ -1,0 +1,8 @@
+url: https://SwissTPH.github.io/AnophelesBionomics
+favicon: inst/app/www/favicon.ico
+navbar:
+  structure:
+    - text: "Home"
+      href: index.html
+    - text: "Reference"
+      href: reference/index.html
