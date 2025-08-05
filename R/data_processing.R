@@ -585,8 +585,8 @@ augment_with_taxonomy <- function(data, compat) {
       data |>
         dplyr::filter(species == "") |>
         dplyr::mutate(
-          species = paste0("unlabel ", complex),
-          name = paste0("unlabel ", complex),
+          species = paste0("unlabeled ", complex),
+          name = paste0("unlabeled ", complex),
           detail = "species"
         )
     )

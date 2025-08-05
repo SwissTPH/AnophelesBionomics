@@ -202,7 +202,7 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
       legend.title = ggplot2::element_blank(),
       legend.text = ggplot2::element_text(size = 60),
       legend.key.size = ggplot2::unit(3, "lines"),
-      legend.spacing.y = ggplot2::unit(10, "lines")
+      legend.spacing.y = ggplot2::unit(30, "lines")
     )
 
   legend <- cowplot::get_legend(legend_plot)

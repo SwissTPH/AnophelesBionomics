@@ -55,8 +55,8 @@ obs_complex_species_pie <- function(data,
   colors_map <- read_data_file(file = "new_palette_density_plots.csv")
 
   data_clean <- dplyr::mutate(data.req,
-                              is_complex = grepl("^unlabel ", species),
-                              species_clean = ifelse(is_complex, sub("^unlabel ", "", species), species)) |>
+                              is_complex = grepl("^unlabeled ", species),
+                              species_clean = ifelse(is_complex, sub("^unlabeled ", "", species), species)) |>
     dplyr::group_by(species_clean, is_complex) |>
     dplyr::summarise(
       total_obs = sum_fun(.data[[obs]], na.rm = TRUE),
@@ -387,7 +387,7 @@ prepare_data_density <- function(stan_results) {
 
   samples.df <- dplyr::filter(samples.df, !base::grepl("complex", name, ignore.case = TRUE))
 
-  target_species <- dplyr::filter(species_complex, base::grepl("unlabel", species, ignore.case = TRUE))
+  target_species <- dplyr::filter(species_complex, base::grepl("unlabeled", species, ignore.case = TRUE))
 
   for (i in base::seq_len(base::nrow(target_species))) {
     sp_name <- target_species$species[i]
@@ -437,7 +437,7 @@ plot_density <- function(stan_results,
   df <- prepare_data_density(stan_results)
 
   if (unlabel) {
-    df <- dplyr::filter(df, !base::grepl("unlabel", name, ignore.case = TRUE))
+    df <- dplyr::filter(df, !base::grepl("unlabeled", name, ignore.case = TRUE))
   }
 
   if (!is.null(complex_names)) {
@@ -720,7 +720,7 @@ species_complex_result <- function(results,
   res_clean <- res |>
     dplyr::filter(!base::grepl("complex", name, ignore.case = TRUE))
   unlabelled_rows <- res_clean |>
-    dplyr::filter(base::grepl("unlabel", name, ignore.case = TRUE))
+    dplyr::filter(base::grepl("unlabeled", name, ignore.case = TRUE))
 
   for (i in base::seq_len(base::nrow(unlabelled_rows))) {
     unlabel_name <- unlabelled_rows$name[i]
@@ -766,7 +766,7 @@ species_complex_result <- function(results,
   }
 
   res_clean <- res_clean |>
-    dplyr::filter(!base::grepl("unlabel", name, ignore.case = TRUE))
+    dplyr::filter(!base::grepl("unlabeled", name, ignore.case = TRUE))
 
   if (all) {
 
@@ -971,7 +971,7 @@ Bionomics_For_Anophles_Model <- function() {
       dplyr::filter(!grepl("complex", name, ignore.case = TRUE))
 
     unlabelled_rows <- res_clean |>
-      dplyr::filter(grepl("unlabel", name, ignore.case = TRUE))
+      dplyr::filter(grepl("unlabeled", name, ignore.case = TRUE))
 
     for (i in seq_len(nrow(unlabelled_rows))) {
       unlabel_name <- unlabelled_rows$name[i]
@@ -1008,7 +1008,7 @@ Bionomics_For_Anophles_Model <- function() {
       }
     }
 
-    res_clean <- res_clean |> dplyr::filter(!grepl("unlabel", name, ignore.case = TRUE))
+    res_clean <- res_clean |> dplyr::filter(!grepl("unlabeled", name, ignore.case = TRUE))
 
     if (all) {
       compat_repo <- read_data_file("compatibility_repo_taxonomy_v2.csv", sep = ";")
