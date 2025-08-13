@@ -30,19 +30,19 @@ Even when species-specific data is missing, the model can infer parameter values
 
 The model focuses on estimating the following mosquito-related parameters:
 
-- **`parous_rate`**: Proportion of previously blood-fed female mosquitoes.
+- **`parous_rate`**: Proportion of parous females out of observed females.
 
 - **`endophagy`**: Proportion of mosquitoes biting indoors versus outdoors.
 
-- **`endophily`**: Proportion of mosquitoes resting indoors after feeding.
+- **`endophily`**: Proportion of mosquitoes resting indoors after having blood-fed. 
 
-- **`HBI`**: Human blood index.
+- **`HBI`**: Human blood inde, the proportion of human blood in the blood meal ingested by mosquitoes. 
 
 - **`indoor_HBI`**: Human blood index for mosquitoes collected indoors
 
 - **`outdoor_HBI`**: Human blood index for mosquitoes collected outdoors.
 
-- **`sac_rate`**: Proportion of sac.
+- **`sac_rate`**: Proportion  of parous females which have oviposited less than 24 hours before being collected. 
 
 The necessary and optional packages required to run the package are listed in the appendix.
 
@@ -115,11 +115,11 @@ This function ensures consistent and reproducible preparation of entomological d
 
 ## Data Visualisation
 
-The function obs_complex_species_pie() allows users to visualize the distribution of mosquito observations by species or species complex through an interactive pie chart. The function calculates observation proportions and consolidates species with very low representation into an “Other” category based on a user-defined threshold. Additionally, the resulting visualization can be saved as a standalone HTML file if a directory is specified.
+The function obs_complex_species_pie() allows users to visualize the distribution of mosquito observations by species or complex through an interactive pie chart. The function calculates observation proportions and consolidates species with very low representation into an “Other” category based on a user-defined threshold. Additionally, the resulting visualization can be saved as a standalone HTML file if a directory is specified.
 
 When hovering over a slice, detailed information is displayed, including the species or complex name, the total number of observations, the number of survey rows, the mean and standard deviation of the observed values, and the proportion of the total.
 
-This function expects as input a list structured as the output of the creation_df() function, which contains a cleaned data frame with observation counts identified by a variable name pattern, the base name of the variable, and a user-friendly label for output naming. The user can adjust the minimum proportion threshold that determines when rare species are grouped together. For example, setting this threshold to 0.05 ensures that only species representing at least 5% of observations are shown individually. Finally the user can chose a path in order to save his pie. For instance, after preparing the data using the preprocessing pipeline, a user might call:
+This function expects as input a list structured as the output of the creation_df() function, which contains a cleaned data frame with observation counts identified by a variable name pattern, the base name of the variable, and a user-friendly label for output naming. The user can adjust the minimum proportion threshold that determines when rare species are grouped together. For example, setting this threshold to 0.05 means that all categories whose combined total accounts for 5% or less of the observations are grouped into "Other". Finally the user can chose a path in order to save his pie. For instance, after preparing the data using the preprocessing pipeline, a user might call:
 
 ```{r obs_spec, fig.width=8, fig.height=6, include=TRUE}
 obs_complex_species_pie(data, threshold_prop_other = 0.05)
@@ -141,7 +141,7 @@ Both functions produce interactive Plotly charts that facilitate exploratory dat
 
 ## To build the model 
 
-The function run_stan() performs hierarchical Bayesian binomial modeling using the rstan package to estimate the distribution of a binary trait, such as Human Blood Index or endophagy, across mosquito species and species complexes. It executes the complete modeling workflow, which includes preparing data in a format compatible with Stan via the prepare_stan_data() function, compiling the Stan model, and conducting sampling.
+The function run_stan() performs hierarchical Bayesian binomial modeling using the rstan package to estimate the distribution of the bionomics, across mosquito species and complexes. It executes the complete modeling workflow, which includes preparing data in a format compatible with Stan via the prepare_stan_data() function, compiling the Stan model, and conducting sampling.
 
 By default, the model runs with 2000 iterations per chain, including a warmup (burn-in) period of 400 iterations, distributed over four independent chains. These parameters — including the total number of iterations, the number of chains, and the thinning interval applied to posterior samples — can be customized by the user to control the length and quality of the sampling process.
 
@@ -167,11 +167,11 @@ Other returned elements include a mapping of species to species complexes, user-
 
 ## Visualizing Posterior Densities by Species Complex: plot_density()
 
-The plot_density() function is used to visualize the posterior distributions of model parameters after fitting a hierarchical Bayesian model via run_stan(). It generates smooth density plots that summarize the uncertainty associated with each estimated parameter, grouped by taxonomic level—namely genus, species complex, and individual species. These visual summaries provide an intuitive and interpretable view of the model outputs across mosquito taxa.
+The plot_density() function is used to visualize the posterior distributions of model parameters after fitting a hierarchical Bayesian model via run_stan(). It generates smooth density plots that summarize the uncertainty associated with each estimated parameter, grouped by complex. These visual summaries provide an intuitive and interpretable view of the model outputs.
 
-The function expects as input the full named list returned by run_stan(), which includes the fitted Stan model object (fit), the mapping between individual species and their associated complexes (species_complex), and a user-friendly variable label (nice_varname) used for titling and file naming. Line styles are used to distinguish between taxonomic levels: dotted lines for genus-level parameters, long-dashed lines for species complexes, and solid lines for individual species. Colors are drawn from a predefined palette, with a fallback to default colors and warnings if certain groups are not defined.
+The function expects as input the full named list returned by run_stan(), which includes the fitted Stan model object (fit), the mapping between individual species and their associated complexes (species_complex), and a user-friendly variable label (nice_varname) used for titling and file naming. Line styles are used to distinguish levels: dotted lines for genus-level parameters, long-dashed lines for complexes-level, and solid lines for individual species-level. Colors are drawn from a predefined palette, with a fallback to default colors and warnings if certain groups are not defined.
 
-Users can optionally filter the visualization to include only specific species complexes by supplying a vector to the complex_names argument. Parameters labeled with "unlabel" can be excluded using the unlabel = TRUE option. If desired, the final plot can also be saved as a PNG file by specifying a valid path via the plot_dir argument.
+Users can optionally filter the visualization to include only specific species complexes by supplying a vector to the complex_names argument. Parameters labeled with "unlabeled" can be excluded using the "unlabel = TRUE" option. If desired, the final plot can also be saved as a PNG file by specifying a valid path via the plot_dir argument.
 
 For example, assuming the model has already been fitted and stored in an object called stan_result, the density plot can be generated and saved using the following code:
 
@@ -192,9 +192,9 @@ The funciton return a combined `ggplot` object containing posterior density plot
 
 ## Extracting Posterior Summary Statistics
 
-The function species_complex_result() extracts and summarizes posterior statistics from the hierarchical Bayesian model fitted using run_stan(). It organizes the posterior samples by taxonomic level—genus, species complex, and species—and produces a tidy data frame ready for analysis or reporting.
+The function species_complex_result() extracts and summarizes posterior statistics from the hierarchical Bayesian model fitted using run_stan(). It produces a tidy data frame ready for analysis or reporting.
 
-The summary includes formatted posterior estimates with confidence intervals, variance measures, and hierarchical metadata. An important feature is the option to set all = TRUE, which enables supplementation of missing species or complexes using an external compatibility taxonomy. In this case, for species without direct data but associated with a species complex for which data exist, the function uses the complex-level estimates. If no data are available at the complex level, the genus-level estimates are used instead. This hierarchical borrowing of information ensures more complete coverage.
+The summary includes formatted posterior estimates with confidence intervals, variance measures, and hierarchical metadata. An important feature is the option to set all = TRUE, which enables supplementation of missing species or complexes using the taxonomy. In this case, for species without direct data but associated with a species complex for which data exist, the function uses the complex-level estimates. If no data are available at the complex level, the genus-level estimates are used instead. This hierarchical borrowing of information ensures more complete coverage.
 
 Two flags in the output help track this process: the data flag is set to TRUE if the estimate is derived from original observed data, and FALSE otherwise. The source_flag indicates the level at which the parameter estimate was taken—whether directly from species-level data, species complex, genus, or supplemented externally.
 
@@ -211,11 +211,11 @@ head(summary_table)
 
 This call produces a comprehensive table including credible intervals and variance estimates for each taxonomic group, borrowing information hierarchically where data are missing, and saves the result as a CSV file. The resulting data frame can then be used for further analysis, visualization, or reporting purposes.
 
-In order to have the correct output for the Packae Anophles model, we have The function Bionomics_For_Anophles_Model(). It wraps and extends the logic of species_complex_result(), applying it sequentially to five core bionomic traits: Parous rate (M, M.sd), Endophagy (endophagy, endophagy.sd), Endophily (endophily, endophily.sd), sac rate (A0, A0.sd), human blood index (HBI) (Chi, )
+In order to have the correct output for the Packae Anophles model, we have The function Bionomics_For_Anophles_Model(). It wraps and extends the logic of species_complex_result(), applying it sequentially to five core bionomic traits: Parous rate (M, M.sd), Endophagy (endophagy, endophagy.sd), Endophily (endophily, endophily.sd), sac rate (A0, A0.sd), human blood index (Chi)
 
 Internally, for each of these parameters, the fonction prepares the data using creation_df(), runs the hierarchical Bayesian model with run_stan() and extracts posterior summaries via the internal function species_complex_result(). However, you don’t need to call any of these steps individually: Bionomics_For_Anophles_Model() automates the entire workflow. The resulting table aggregates posterior means and variances into a single, tidy data frame.
 
-The function automatically standardizes species and complex names to ensure compatibility with the structure expected by the AnophelsModel package. This includes renaming known variants (e.g., 'Anopheles gambiae s.s.' → 'Anopheles gambiae' → 'Gambiae complex') and inserting a synthetic row for the 'Jamesii complex'.
+The function automatically standardizes species and complex names to ensure compatibility with the structure expected by the AnophelsModel package. This includes renaming known variants (e.g., 'Anopheles gambiae s.s.' → 'Anopheles gambiae' → 'Gambiae complex').
 
 To use it, run:
 
@@ -224,7 +224,7 @@ bionomics_df <- Bionomics_For_Anophles_Model()
 head(bionomics_df)
 ```
 
-The output format is specifically designed to plug directly into AnophelsModel, Note: the output currently lacks the following columns required for full compatibility with AnophelsModel: zeta.3, td, tau, ts, and to. These parameters are not estimated by the current hierarchical model and should be added manually or completed through another estimation source if full model input is needed.
+The output format is specifically designed to plug directly into AnophelsModel.
 
 
 <br><br><br>
@@ -365,8 +365,7 @@ The following is the full list of Anopheles species and species complexes includ
 
 To successfully create a dataset repository using create_repo(), your dataset must include:
 
-- **`species`** — The mosquito species name (e.g., An. gambiae).
-- **`insecticide_control`** — Indicates if insecticide was present ("t" for true, "f" for false).
+- **`species`** — The mosquito species or complex name.
 - **`country`** — The country where the data was collected.
 - **`year_start`** — Enables filtering by time periods later.
 - **`insecticide_control`** — Should be "f" for control and "t" for intervention.
@@ -396,15 +395,15 @@ To calculate endophagy, your dataset must include:
 - **`indoor_biting`** — Percentage; used to estimate indoor_biting_n if needed, NA otherwise.
 - **`indoor_biting_sampling`** — Must be "MBI".
 - **`outdoor_biting_sampling`** — Must be "MBO".
-- **`HLC_same`** — Must be TRUE, indicating same design indoors and outdoors.
+- **`HLC_same`** — Must be TRUE, indicatting if the estimation used is Human Landing Catches ( adults sit indoors or outdoors with their legs exposed and wait until a mosquito lands on their legs to catch it ). 
 - **`insecticide_control`** — Must be "f".
 
 ### endophily
 
 To calculate endophily, your dataset must include:
 
-- **`indoor_fed`** — Number of mosquitoes fed indoors.
-- **`outdoor_fed`** — Number fed outdoors.
+- **`indoor_fed`** — Number of mosquitoes resting indoors after having blood-fed.
+- **`outdoor_fed`** — Number of mosquitoes resting outdoors after having blood-fed.
 - **`resting_unit`** — Must be either "%" or "count".
 
 If resting_unit is "%", also include:
@@ -428,8 +427,8 @@ Optionally, if reconstructing totals:
 
 To calculate sac rate, your dataset must include:
 
-- **`parous_with_sac`** — Number of parous mosquitoes with sac (numerator).
-- **`parous`** — Total number of parous mosquitoes (denominator).
+- **`parous_with_sac`** — of parous females which have oviposited less than 24 hours before being collected.
+- **`parous** — Total number of parous mosquitoes (denominator).
 - **`sac_rate_percent`** — Percentage; used to estimate parous_with_sac if needed, NA otherwise.
 - **`insecticide_control`** — Must be "t".
 
@@ -437,27 +436,27 @@ To calculate sac rate, your dataset must include:
 
 To calculate indoor human blood index (indoor HBI), your dataset must include:
 
-- **`indoor_host_sampling`** — Must be one of "HRI", "ILT", or "WinExit".
-- **`indoor_host_n`** — Number of mosquitoes feeding on humans indoors.
-- **`indoor_host_total`** — Total mosquitoes tested indoors.
+- **`indoor_host_n`** — Number of mosquitoes having ingested human blood indoors.
+- **`indoor_host_total`** — Number of mosquitoes examined for blood meal origin indoors.
 - **`indoor_host`** — Percentage; used to estimate indoor_host_n if needed, NA otherwise.
+- **`indoor_host_sampling`** — Must be one of "HRI", "ILT", or "WinExit".
 - **`host_unit`** — Must NOT be "AI" (animal index).
 - **`insecticide_control`** — Must be "f".
 
 To calculate outdoor human blood index (outdoor HBI), your dataset must include:
 
-- **`outdoor_host_sampling`** — Must be one of "RO", "RO (shelter)", "RO (pit)", or "WinExit".
-- **`outdoor_host_n`** — Number of mosquitoes feeding on humans outdoors.
-- **`outdoor_host_total`** — Total mosquitoes tested outdoors.
+- **`outdoor_host_n`** — Number of mosquitoes having ingested human blood outdoors.
+- **`outdoor_host_total`** — Number of mosquitoes examined for blood meal origin outdoors.
 - **`outdoor_host`** — Percentage; used to estimate outdoor_host_n if needed, NA otherwise.
+- **`outdoor_host_sampling`** — Must be one of "RO", "RO (shelter)", "RO (pit)", or "WinExit".
 - **`host_unit`** — Must NOT be "AI" (animal index).
 - **`insecticide_control`** — Must be "f".
 
 If you have combined host sampling (no separation between indoor and outdoor), your dataset must also, as well that the precedente colomns include:
 
-- **`combined_host_sampling_1`** — Main sampling method used, must be valid.
-- **`combined_host_n`** — Number of mosquitoes feeding on humans.
-- **`combined_host_total`** — Total mosquitoes tested.
+- **`combined_host_n`** — Number of mosquitoes having ingested human blood.
+- **`combined_host_total`** — Number of mosquitoes examined for blood meal origin.
 - **`combined_host`** — Percentage; used to estimate combined_host_n if needed, NA otherwise.
 - **`combined_host_sampling_n`** — Must NOT be "t".
+- **`combined_host_sampling_1`** — Main sampling method used, must be valid (different of "").
 - **`insecticide_control`** — Must be "f".
