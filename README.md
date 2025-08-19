@@ -16,5 +16,5 @@ To install the package:
 
 ```r
 # install.packages("devtools")
-devtools::install_github("SwissTPH/AnophelesBionomics", build_vignettes = TRUE)
+devtools::install_github("SwissTPH/AnophelesBionomics")
 ```
