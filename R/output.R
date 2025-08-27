@@ -8,12 +8,12 @@
 #' and can save the plot as an HTML file for sharing or embedding.
 #'
 #' @param data A list containing the following named elements:
-#'   - `data.req`: A data frame with observation data. Must contain a column named
-#'     after the pattern `"<varname>.den"` (e.g., `"psrous_rate.den"`), which stores
-#'     the observation counts per species.
-#'   - `varname`: A character string indicating the base name of the observation variable
-#'     (used to identify the column `<varname>.den` in the data).
-#'   - `nice_varname`: A character string used for naming the saved output file.
+#' \describe{
+#'   \item{data.req}{A data frame with observation data. Must contain a column named
+#'   after the pattern "<varname>.den" (e.g., "psrous_rate.den").}
+#'   \item{varname}{A character string indicating the base name of the observation variable.}
+#'   \item{nice_varname}{A character string used for naming the saved output file.}
+#' }
 #'
 #' @param threshold_prop_other A numeric threshold (between 0 and 1) indicating the
 #' minimum proportion of total observations required for a species or complex to appear
@@ -24,14 +24,18 @@
 #' the HTML version of the pie chart should be saved. If `NULL`, the chart is not saved.
 #' Default is a specific folder on the user's system.
 #'
-#' @return An interactive pie chart (`plotly` object) showing the distribution of
-#' observations by species or species complex. If `plot_dir` is provided, the chart is also
-#' saved as an HTML file.
+#' @return
+#' \itemize{
+#'   \item{plotly}{An interactive pie chart showing the distribution of observations.}
+#'   \item{HTML file}{If `plot_dir` is provided, the chart is also saved as an HTML file.}
+#' }
 #'
 #' @details
-#' - Species names starting with `"unlabel_"` are treated as complexes and labeled accordingly.
-#' - The observation variable used in the calculation must match the pattern `<varname>.den`.
-#' - The pie chart uses `plotly` for interactive visualization and `htmlwidgets` to export.
+#' \itemize{
+#'   \item{Species names starting with "unlabel_"}{are treated as complexes and labeled accordingly.}
+#'   \item{The observation variable used in the calculation}{must match the pattern <varname>.den.}
+#'   \item{The pie chart}{uses plotly for interactive visualization and htmlwidgets to export.}
+#' }
 #'
 #' @export
 obs_complex_species_pie <- function(data,
