@@ -10,10 +10,10 @@
 create_repo <- function() {
 
   files <- c(
-    "Bionomics Africa.csv",
-    "Bionomics Americas.csv",
-    "Bionomics Asia-Pacific.csv",
-    "Bionomics Asia-Pacific_bz_20200516.csv"
+    "Bionomics_Africa.csv",
+    "Bionomics_Americas.csv",
+    "Bionomics_Asia-Pacific.csv",
+    "Bionomics_Asia-Pacific_bz_20200516.csv"
   )
 
   data_list <- lapply(files, function(file) {

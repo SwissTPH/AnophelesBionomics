@@ -8,8 +8,8 @@ The model estimates several important bionomics parameters: the parous rate, end
 
 AnophelesBionomics supports both internal and user-provided datasets. It also includes tools for data preparation, model diagnostics, and result exploration.
 
-The package depends on several R libraries for core functionality, including `rstan`, `dplyr`, `ggplot2`, and `plotly`. Optional interactive features require `htmlwidgets` and `shiny`.
-
+The package depends on several R libraries for core functionality, including `stats`, `dplyr`, `ggplot2`, `rstan`, `plotly`, `coda`, `htmlwidgets`, `shiny`, `cowplot`, `rlang`, `stringr`, and `tidyr`.
+`htmlwidgets`
 ## Installation
 
 To install the package:

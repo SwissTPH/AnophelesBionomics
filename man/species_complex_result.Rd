@@ -14,6 +14,8 @@ species_complex_result(results, ci_level = 0.95, all = TRUE, output_dir = NULL)
 \item{ci_level}{Numeric value between 0 and 1 specifying the confidence interval level (default is 0.95).}
 
 \item{all}{Logical indicating whether to include all species and complexes from an external compatibility repository (default is TRUE).}
+
+\item{output_dir}{Optional character. Directory path to save the CSV. If NULL, the plot is not saved.}
 }
 \value{
 A data.frame with summarized posterior statistics including:

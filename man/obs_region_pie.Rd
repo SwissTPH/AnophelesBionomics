@@ -9,7 +9,7 @@ obs_region_pie(data, plot_dir = NULL)
 \arguments{
 \item{data}{A list containing:
 - `data.req`: a data frame that includes a column `region`, a numeric column `value`,
-  and an observation count column named `{varname}.den`.
+  and an observation count column named `varname.den`.
 - `varname`: the base name of the variable of interest (e.g., "n").
 - `nice_varname`: a human-readable version of the variable name (unused in this function).}
 

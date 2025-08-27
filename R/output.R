@@ -1,41 +1,35 @@
 #' Generate a Pie Chart of Observations by Species or Complex
 #'
 #' @description
-#' This function creates an interactive pie chart that shows the distribution
-#' of observations by species or species complexes, based on a specified
-#' observation variable from a pre-processed dataset. It optionally groups
-#' species with a small proportion of observations into a single "Other" category,
-#' and can save the plot as an HTML file for sharing or embedding.
+#' Creates an interactive pie chart showing the distribution of observations
+#' by species or species complexes, based on a specified observation variable
+#' from a pre-processed dataset. Optionally groups species with a small
+#' proportion of observations into an "Other" category, and can save the plot
+#' as an HTML file for sharing or embedding.
+
+#' @param data A list containing the following elements:
+#'   - `data.req`: A data frame with observation data. Must contain a column
+#'     named with the pattern `<varname>.den` (e.g., `"parous_rate.den"`).
+#'   - `varname`: A character string indicating the base name of the observation variable.
+#'   - `nice_varname`: A character string used for naming the saved output file.
 #'
-#' @param data A list containing the following named elements:
-#' \describe{
-#'   \item{data.req}{A data frame with observation data. Must contain a column named
-#'   after the pattern "<varname>.den" (e.g., "psrous_rate.den").}
-#'   \item{varname}{A character string indicating the base name of the observation variable.}
-#'   \item{nice_varname}{A character string used for naming the saved output file.}
-#' }
-#'
-#' @param threshold_prop_other A numeric threshold (between 0 and 1) indicating the
-#' minimum proportion of total observations required for a species or complex to appear
-#' as its own slice in the pie chart. Species below this threshold are grouped under "Other".
-#' Default is `0.05` (1%).
+#' @param threshold_prop_other A numeric value between 0 and 1 indicating the
+#' minimum proportion of total observations required for a species or complex
+#' to appear as its own slice in the pie chart. Species below this threshold
+#' are grouped under "Other". Default is 0.05 (5 percent).
 #'
 #' @param plot_dir Optional. A character string giving the directory path where
 #' the HTML version of the pie chart should be saved. If `NULL`, the chart is not saved.
 #' Default is a specific folder on the user's system.
-#'
-#' @return
-#' \itemize{
-#'   \item{plotly}{An interactive pie chart showing the distribution of observations.}
-#'   \item{HTML file}{If `plot_dir` is provided, the chart is also saved as an HTML file.}
-#' }
+
+#' @return A list containing:
+#'   - `plotly`: An interactive pie chart showing the distribution of observations.
+#'   - `HTML file`: If `plot_dir` is provided, the chart is also saved as an HTML file.
 #'
 #' @details
-#' \itemize{
-#'   \item{Species names starting with "unlabel_"}{are treated as complexes and labeled accordingly.}
-#'   \item{The observation variable used in the calculation}{must match the pattern <varname>.den.}
-#'   \item{The pie chart}{uses plotly for interactive visualization and htmlwidgets to export.}
-#' }
+#' - Species names starting with `"unlabel_"` are treated as complexes and labeled accordingly.
+#' - The observation variable used in the calculation must match the pattern `<varname>.den`.
+#' - The pie chart uses **plotly** for interactive visualization and **htmlwidgets** to export.
 #'
 #' @export
 obs_complex_species_pie <- function(data,
@@ -107,10 +101,10 @@ obs_complex_species_pie <- function(data,
           "SD value: ", round_fun(sd_value, 2), "<br>",
           "Proportion: ", round_fun(prop * 100, 1), "%"
         ),
-        label_text = paste0(label_grouped, " · ", round_fun(prop * 100), "%")
+        label_text = paste0(label_grouped, " : ", round_fun(prop * 100), "%")
       )
 
-    message("Proportion de la catégorie 'Other' : ",
+    message("Proportion of the 'Other' category' : ",
             round_fun(sum_fun(data_grouped$prop[data_grouped$label_grouped == "Other"]) * 100, 2), "%")
   } else {
     data_grouped <- data_clean |>
@@ -126,7 +120,7 @@ obs_complex_species_pie <- function(data,
           "SD value: ", round_fun(sd_value, 2), "<br>",
           "Proportion: ", round_fun(prop * 100, 1), "%"
         ),
-        label_text = paste0(label_grouped, " · ", round_fun(prop * 100), "%")
+        label_text = paste0(label_grouped, " : ", round_fun(prop * 100), "%")
       )
   }
 
@@ -187,7 +181,7 @@ obs_complex_species_pie <- function(data,
 #'
 #' @param data A list containing:
 #'   - `data.req`: a data frame that includes a column `region`, a numeric column `value`,
-#'     and an observation count column named `{varname}.den`.
+#'     and an observation count column named `varname.den`.
 #'   - `varname`: the base name of the variable of interest (e.g., "n").
 #'   - `nice_varname`: a human-readable version of the variable name (unused in this function).
 #'
@@ -254,7 +248,7 @@ obs_region_pie <- function(data,
         "SD value: ", round_fun(sd_value, 2), "<br>",
         "Proportion: ", round_fun(prop * 100, 1), "%"
       ),
-      label_text = paste0(label_grouped, " · ", round_fun(prop * 100), "%")
+      label_text = paste0(label_grouped, " : ", round_fun(prop * 100), "%")
     )
 
   title_text <- paste0("Distribution of Observations by Region")
@@ -312,18 +306,14 @@ obs_region_pie <- function(data,
 #' Converts MCMC samples from a hierarchical Bayesian model into a tidy (long-format) `data.frame` enriched with taxonomic information.
 #' The function identifies the level (species, complex, or genus), assigns names based on taxonomy, and maps groupings for later plotting.
 #'
-#' @param samples An object of class `mcmc.list` (e.g., output from `coda::mcmc.list`),
-#'    containing posterior samples for species- and complex-level parameters (named `p1[...]` and `p2[...]`).
-#' @param chain_length Integer. Total number of MCMC iterations per chain.
-#' @param burnin Integer. Number of initial iterations to discard as burn-in.
-#' @param thinning Integer. Thinning interval used during sampling (e.g., every 10th draw).
-#' @param species_complex A `data.frame` mapping species and complexes. Must include:
-#' \itemize{
-#'   \item `species`: species names,
-#'   \item `complex`: complex names,
-#'   \item `speciesNb`: integer codes for species (matching Stan),
-#'   \item `complexNb`: integer codes for complexes (matching Stan).
-#' }
+#' @param stan_results A list containing all MCMC results and metadata, expected to include:
+#'   \describe{
+#'     \item{samples}{An object of class `mcmc.list` (posterior samples for species- and complex-level parameters).}
+#'     \item{chain_length}{Integer. Total number of MCMC iterations per chain.}
+#'     \item{burnin}{Integer. Number of initial iterations to discard.}
+#'     \item{thinning}{Integer. Thinning interval used during sampling.}
+#'     \item{species_complex}{A `data.frame` mapping species and complexes with columns `species`, `complex`, `speciesNb`, `complexNb`.}
+#'   }
 #'
 #' @return A `data.frame` in long format with the following columns:
 #' \describe{
@@ -424,7 +414,6 @@ prepare_data_density <- function(stan_results) {
 #' @param stan_results Named list output from `run_stan()` containing the fitted model and related data.
 #' @param unlabel Logical. If TRUE, removes labels from the plot. Default is FALSE.
 #' @param plot_dir Optional character. Directory path to save the plot image. If NULL, the plot is not saved.
-#' @param genus Logical. Adjusts vertical size of the plot. Default is TRUE.
 #' @param complex_names Optional character vector. Names of species complexes to include in the plot. If NULL, all are included.
 #'
 #' @export
@@ -602,6 +591,7 @@ plot_density <- function(stan_results,
 #'   - `species_complex`: A data frame linking species and complexes with indices.
 #' @param ci_level Numeric value between 0 and 1 specifying the confidence interval level (default is 0.95).
 #' @param all Logical indicating whether to include all species and complexes from an external compatibility repository (default is TRUE).
+#' @param output_dir Optional character. Directory path to save the CSV. If NULL, the plot is not saved.
 #'
 #' @return A data.frame with summarized posterior statistics including:
 #'   - `name`: Taxonomic unit name (genus, complex, or species),
@@ -708,7 +698,7 @@ species_complex_result <- function(results,
       estimate_pct = estimate * 100,
       margin_error_pct = margin_error * 100,
       estimate_ci = base::paste0(
-        base::round(estimate_pct, 2), "% ± ", base::round(margin_error_pct, 2), "% (CI ", ci_level * 100, "%)"
+        base::round(estimate_pct, 2), "% +/- ", base::round(margin_error_pct, 2), "% (CI ", ci_level * 100, "%)"
       )
     ) |>
     dplyr::select(name, level, estimate_ci, variance, ci_lower, ci_upper)
@@ -1072,8 +1062,8 @@ Bionomics_For_Anophles_Model <- function() {
         }
       }
     }
-    # Nettoyage du nom selon les règles demandées
-    res_clean <- res_clean |>
+
+      res_clean <- res_clean |>
       dplyr::mutate(
         name = dplyr::case_when(
           name == "Anopheles gambiae s.s." ~ "Anopheles gambiae",
@@ -1174,3 +1164,150 @@ if (length(idx_jamesii) > 1) {
 
 
 
+
+
+#' Generate Multi-Species Pie Charts
+#'
+#' This function creates pie charts for multiple species-related variables, visualizing
+#' the proportion of observations for each species. It handles complex species labels,
+#' groups minor proportions under "Other", and applies a custom color palette for each species.
+#'
+#' @param seuil_prop_autres Numeric, default 0.05. Threshold for grouping low-proportion species into "Other".
+#' @param plot_dir Character, default "c"path/to/your/folder/". Directory where the output PNG file will be saved.
+#'
+#' @details
+#' The function processes a set of predefined variables (`endophagy`, `endophily`,
+#' `indoor_HBI`, `outdoor_HBI`, `parous_rate`, `sac_rate`) and generates a pie chart
+#' for each. Complex species names are identified and labeled separately. Colors are
+#' assigned using a custom palette loaded from a CSV file (`new_palette_density_plots.csv`).
+#' All generated plots are combined into a single grid with a shared legend.
+#'
+#' The output is saved as a PNG file named "multi_species_piechart.png" in the specified directory.
+#'
+#' @return
+#' The function does not return a value but saves the plot as a PNG file.
+#'
+#'
+#' @export
+multi_species_pie <- function(seuil_prop_autres = 0.05,
+                              plot_dir = "path/to/your/folder/") {
+  varnames <- c("endophagy", "endophily",
+                "indoor_HBI", "outdoor_HBI", "parous_rate", "sac_rate")
+
+  colors_map <- read_data_file(file = "new_palette_density_plots.csv")
+
+  all_data_clean_list <- list()
+
+  plot_for_var <- function(varname) {
+    prepared <- creation_df(varname = varname)
+    data.req <- prepared$data.req
+    nice_varname <- prepared$nice_varname
+    obs <- paste0(varname, ".den")
+
+    data_clean <- data.req |>
+      dplyr::mutate(
+        is_complex = grepl("^unlabel ", species),
+        species_clean = ifelse(is_complex, sub("^unlabel ", "", species), species)
+      ) |>
+      dplyr::group_by(species_clean, is_complex) |>
+      dplyr::summarise(
+        total_obs = sum(.data[[obs]], na.rm = TRUE),
+        .groups = "drop"
+      ) |>
+      dplyr::mutate(
+        label = ifelse(is_complex,
+                       paste0("Complex: ", species_clean),
+                       paste0("Species: ", species_clean)),
+        prop = total_obs / sum(total_obs)
+      ) |>
+      dplyr::left_join(colors_map, by = c("species_clean" = "name"))
+
+    if (nrow(data_clean) >= 8) {
+      data_clean <- data_clean |>
+        dplyr::arrange(prop) |>
+        dplyr::mutate(cum_prop = cumsum(prop)) |>
+        dplyr::mutate(
+          label_grouped = ifelse(cum_prop <= seuil_prop_autres, "Other", label),
+          pal = ifelse(cum_prop <= seuil_prop_autres, NA, pal)
+        ) |>
+        dplyr::group_by(label_grouped) |>
+        dplyr::summarise(
+          total_obs = sum(total_obs),
+          pal = dplyr::first(na.omit(pal)),
+          .groups = "drop"
+        ) |>
+        dplyr::mutate(
+          prop = total_obs / sum(total_obs),
+          pal = ifelse(is.na(pal), "#CCCCCC", pal),
+          label = label_grouped
+        )
+    } else {
+      data_clean <- data_clean |>
+        dplyr::mutate(
+          label = label,
+          pal = ifelse(is.na(pal), "#CCCCCC", pal)
+        )
+    }
+
+    data_clean <- data_clean |>
+      dplyr::arrange(prop) |>
+      dplyr::mutate(
+        label_pct = paste0(label, " : ", round(prop * 100), "%"),
+        label = factor(label, levels = label)
+      )
+
+    all_data_clean_list[[varname]] <<- data_clean
+
+    ggplot2::ggplot(data_clean, ggplot2::aes(x = "", y = prop, fill = label)) +
+      ggplot2::geom_col(width = 1, color = "white") +
+      ggplot2::coord_polar(theta = "y") +
+      ggplot2::geom_text(
+        ggplot2::aes(label = ifelse(prop > 0.03, paste0(round(prop * 100), "%"), "")),
+        position = ggplot2::position_stack(vjust = 0.5),
+        color = "black",
+        size = 17
+      ) +
+      ggplot2::scale_fill_manual(values = setNames(data_clean$pal, data_clean$label)) +
+      ggplot2::theme_void(base_size = 25) +
+      ggplot2::theme(
+        legend.position = "none",
+        plot.margin = ggplot2::margin(t = 5, b = 10),
+        plot.title = ggplot2::element_blank(),
+        plot.caption = ggplot2::element_text(hjust = 0.5, size = 50, face = "bold")
+      ) +
+      ggplot2::labs(caption = nice_varname)
+  }
+
+  plots <- base::lapply(varnames, plot_for_var)
+
+  legend_data <- dplyr::bind_rows(all_data_clean_list)
+  legend_df <- legend_data |>
+    dplyr::distinct(label, pal) |>
+    dplyr::arrange(label)
+
+  legend_plot <- ggplot2::ggplot(legend_df, ggplot2::aes(x = 1, y = label, fill = label)) +
+    ggplot2::geom_col() +
+    ggplot2::scale_fill_manual(values = setNames(legend_df$pal, legend_df$label)) +
+    ggplot2::theme_void() +
+    ggplot2::theme(
+      legend.position = "right",
+      legend.title = ggplot2::element_blank(),
+      legend.text = ggplot2::element_text(size = 60),
+      legend.key.size = ggplot2::unit(3, "lines"),
+      legend.spacing.y = ggplot2::unit(30, "lines")
+    )
+
+  legend <- cowplot::get_legend(legend_plot)
+
+  plot_grid_final <- gridExtra::grid.arrange(
+    cowplot::plot_grid(plotlist = plots, ncol = 2, nrow = 3,
+                       rel_widths = c(1, 1), rel_heights = c(1.2, 1.2, 1.2), hjust = 0),
+    legend,
+    ncol = 2,
+    widths = c(1.9, 1.1)
+  )
+
+  outfile <- base::file.path(plot_dir, "multi_species_piechart.png")
+  ggplot2::ggsave(outfile, plot = plot_grid_final, width = 37, height = 40, dpi = 300)
+  base::message("Plot saved at: ", outfile)
+}

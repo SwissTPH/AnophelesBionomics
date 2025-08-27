@@ -7,21 +7,13 @@
 prepare_data_density(stan_results)
 }
 \arguments{
-\item{samples}{An object of class `mcmc.list` (e.g., output from `coda::mcmc.list`),
-containing posterior samples for species- and complex-level parameters (named `p1[...]` and `p2[...]`).}
-
-\item{chain_length}{Integer. Total number of MCMC iterations per chain.}
-
-\item{burnin}{Integer. Number of initial iterations to discard as burn-in.}
-
-\item{thinning}{Integer. Thinning interval used during sampling (e.g., every 10th draw).}
-
-\item{species_complex}{A `data.frame` mapping species and complexes. Must include:
-\itemize{
-  \item `species`: species names,
-  \item `complex`: complex names,
-  \item `speciesNb`: integer codes for species (matching Stan),
-  \item `complexNb`: integer codes for complexes (matching Stan).
+\item{stan_results}{A list containing all MCMC results and metadata, expected to include:
+\describe{
+  \item{samples}{An object of class `mcmc.list` (posterior samples for species- and complex-level parameters).}
+  \item{chain_length}{Integer. Total number of MCMC iterations per chain.}
+  \item{burnin}{Integer. Number of initial iterations to discard.}
+  \item{thinning}{Integer. Thinning interval used during sampling.}
+  \item{species_complex}{A `data.frame` mapping species and complexes with columns `species`, `complex`, `speciesNb`, `complexNb`.}
 }}
 }
 \value{

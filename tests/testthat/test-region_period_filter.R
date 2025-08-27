@@ -1,7 +1,8 @@
 # Sample repository data
-repo <- tibble::tibble(
+repo <- data.frame(
   country = c("The Gambia", "Tanzania (United Republic of)", "Venezuela", "Philippines", "Brazil"),
-  year_start = c(2000, 1995, 2010, 2020, 2005)
+  year_start = c(2000, 1995, 2010, 2020, 2005),
+  stringsAsFactors = FALSE
 )
 
 test_that("Function filters correctly by region only", {

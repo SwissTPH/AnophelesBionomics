@@ -7,40 +7,35 @@
 obs_complex_species_pie(data, threshold_prop_other = 0.05, plot_dir = NULL)
 }
 \arguments{
-\item{data}{A list containing the following named elements:
-\describe{
-  \item{data.req}{A data frame with observation data. Must contain a column named
-  after the pattern "<varname>.den" (e.g., "psrous_rate.den").}
-  \item{varname}{A character string indicating the base name of the observation variable.}
-  \item{nice_varname}{A character string used for naming the saved output file.}
-}}
+\item{data}{A list containing the following elements:
+- `data.req`: A data frame with observation data. Must contain a column
+  named with the pattern `<varname>.den` (e.g., `"parous_rate.den"`).
+- `varname`: A character string indicating the base name of the observation variable.
+- `nice_varname`: A character string used for naming the saved output file.}
 
-\item{threshold_prop_other}{A numeric threshold (between 0 and 1) indicating the
-minimum proportion of total observations required for a species or complex to appear
-as its own slice in the pie chart. Species below this threshold are grouped under "Other".
-Default is `0.05` (1%).}
+\item{threshold_prop_other}{A numeric value between 0 and 1 indicating the
+minimum proportion of total observations required for a species or complex
+to appear as its own slice in the pie chart. Species below this threshold
+are grouped under "Other". Default is 0.05 (5 percent).}
 
 \item{plot_dir}{Optional. A character string giving the directory path where
 the HTML version of the pie chart should be saved. If `NULL`, the chart is not saved.
 Default is a specific folder on the user's system.}
 }
 \value{
-\itemize{
-  \item{plotly}{An interactive pie chart showing the distribution of observations.}
-  \item{HTML file}{If `plot_dir` is provided, the chart is also saved as an HTML file.}
-}
+A list containing:
+  - `plotly`: An interactive pie chart showing the distribution of observations.
+  - `HTML file`: If `plot_dir` is provided, the chart is also saved as an HTML file.
 }
 \description{
-This function creates an interactive pie chart that shows the distribution
-of observations by species or species complexes, based on a specified
-observation variable from a pre-processed dataset. It optionally groups
-species with a small proportion of observations into a single "Other" category,
-and can save the plot as an HTML file for sharing or embedding.
+Creates an interactive pie chart showing the distribution of observations
+by species or species complexes, based on a specified observation variable
+from a pre-processed dataset. Optionally groups species with a small
+proportion of observations into an "Other" category, and can save the plot
+as an HTML file for sharing or embedding.
 }
 \details{
-\itemize{
-  \item{Species names starting with "unlabel_"}{are treated as complexes and labeled accordingly.}
-  \item{The observation variable used in the calculation}{must match the pattern <varname>.den.}
-  \item{The pie chart}{uses plotly for interactive visualization and htmlwidgets to export.}
-}
+- Species names starting with `"unlabel_"` are treated as complexes and labeled accordingly.
+- The observation variable used in the calculation must match the pattern `<varname>.den`.
+- The pie chart uses **plotly** for interactive visualization and **htmlwidgets** to export.
 }

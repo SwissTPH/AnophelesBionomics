@@ -59,9 +59,9 @@ test_that("Mixed species and complex data", {
 
   result <- augment_with_taxonomy(test_data, test_compat)
 
-  expect_equal(sum(grepl("unlabel_", result$data$species)), 2)
+  expect_equal(sum(grepl("unlabeled ", result$data$species)), 2)
   expect_equal(result$data$complex[3], "X")
-  expect_equal(result$data$species[4], "unlabel_Y")
+  expect_equal(result$data$species[4], "unlabeled Y")
 })
 
 test_that("Duplicate species names", {
@@ -101,8 +101,8 @@ test_that("Complex-only data", {
 
   result <- augment_with_taxonomy(test_data, test_compat)
 
-  expect_true(all(grepl("unlabel_", result$data$species)))
-  expect_equal(result$data$species, c("unlabel_X", "unlabel_Y"))
+  expect_true(all(grepl("unlabeled ", result$data$species)))
+  expect_equal(result$data$species, c("unlabeled X", "unlabeled Y"))
   expect_equal(result$data$complex, c("X", "Y"))
 })
 

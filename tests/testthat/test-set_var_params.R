@@ -77,7 +77,7 @@ test_that("set_var_params handles all supported variables correctly", {
 
   # Test indoor_HBI
   result <- set_var_params("indoor_HBI", repo)
-  expect_equal(result$nice_varname, "Indoor_HBI")
+  expect_equal(result$nice_varname, "Indoor HBI")
   expect_equal(result$denominator_variables, "host_total")
   expect_equal(result$numerator_variables, "host_n")
   expect_equal(result$percentage_variables, "host_perc")
@@ -85,11 +85,14 @@ test_that("set_var_params handles all supported variables correctly", {
 
   # Test outdoor_HBI
   result <- set_var_params("outdoor_HBI", repo)
-  expect_equal(result$nice_varname, "Outdoor_HBI")
+  expect_equal(result$nice_varname, "Outdoor HBI")
 
   # Test error for invalid variable
-  expect_error(set_var_params("invalid_var", repo),
-               "Unrecognized variable name. Supported variables: parous_rate, endophagy, endophily, outdoor_HBI, indoor_HBI, sac_rate.")
+  expect_error(
+    set_var_params("invalid_var", repo),
+    "Unrecognized variable name. Supported variables: parous_rate, endophagy, endophily, outdoor_HBI, indoor_HBI, HBI, sac_rate."
+  )
+
 })
 
 
@@ -191,7 +194,7 @@ test_that("indoor_HBI transformation extracts correct indoor observations", {
   new_repo <- res$repo
 
   expect_true(all(new_repo$location == "indoors"))
-  View(new_repo)
+
   r1 <- new_repo %>% dplyr::filter(citation == "Qui 1997", host_sampling == "HRI")
   expect_true(any(r1$host_n == 10))
   expect_true(any(r1$host_total == 20))

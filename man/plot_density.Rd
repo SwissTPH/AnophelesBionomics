@@ -19,8 +19,6 @@ plot_density(
 \item{plot_dir}{Optional character. Directory path to save the plot image. If NULL, the plot is not saved.}
 
 \item{complex_names}{Optional character vector. Names of species complexes to include in the plot. If NULL, all are included.}
-
-\item{genus}{Logical. Adjusts vertical size of the plot. Default is TRUE.}
 }
 \description{
 This function creates posterior density plots for the hierarchical Bayesian model parameters
