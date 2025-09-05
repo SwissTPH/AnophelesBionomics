@@ -2,13 +2,7 @@ Package: AnophelesBionomics
 Type: Package
 Title: Analysis Tools for Anopheles Mosquito Bionomics
 Version: 0.1.0
-Authors@R: c(
-    person(
-    "Aurélien", "Tarroux",
-    email = "aurelien.tarroux@swisstph.ch",
-    role = c("cre")
-    )
-  )
+Authors@R: person("Aurélien", "Tarroux", email = "aurelien.tarroux@swisstph.ch", role = c("aut", "cre"))
 Description: Provides functions for preparing data, running Bayesian hierarchical models using Stan, 
     and visualizing species and complex-level bionomic parameters of Anopheles mosquitoes.
     Includes data manipulation, plotting, and model summarization utilities.
@@ -42,3 +36,4 @@ Suggests:
 VignetteBuilder: rmarkdown, knitr
 Config/testthat/edition: 3
 Depends: R (>=  4.1.0)
+URL: https://SwissTPH.github.io/AnophelesBionomics

@@ -6,7 +6,6 @@
 #' entries lacking taxonomic classification. Stops execution if required columns are missing.
 #'
 #' @return A `data.frame` containing the harmonized bionomics dataset from multiple sources.
-#' @export
 create_repo <- function() {
 
   files <- c(
@@ -103,7 +102,6 @@ create_repo <- function() {
 #'
 #' repo <- adding_data_extern("parous_rate", repo, extern_data)
 #'
-#' @export
 adding_data_extern <- function(varname, repo, extern_data) {
   base_required <- c("species", "insecticide_control", "country", "year_start")
 
@@ -173,7 +171,6 @@ adding_data_extern <- function(varname, repo, extern_data) {
 #'   \item{repo}{(Optional) Transformed repository \code{data.frame} for HBI and other derived variables}
 #' }
 #'
-#' @export
 set_var_params <- function(varname, repo) {
 
   if (varname == "parous_rate") {
@@ -379,8 +376,6 @@ region_period_filter <- function(repo, geo =  c("Africa-E", "Africa-W", "America
 #'   \item{\code{<varname>.num}}{Total numerator, estimated using percentages if necessary.}
 #'   \item{\code{<varname>.den}}{Total denominator. Zero values are treated as `NA`.}
 #' }
-#'
-#' @export
 augment_withProportion_modif <- function(df, varname, denominator_variables, numerator_variables, percentage_variables = NULL) {
   total <- rowSums(subset(df, select = denominator_variables), na.rm = FALSE)
   total[total == 0] <- NA
@@ -428,8 +423,6 @@ augment_withProportion_modif <- function(df, varname, denominator_variables, num
 #'   \item A warning is issued if any rows have `varname.num > varname.den`.
 #'   \item The total number of valid observations is printed.
 #' }
-#'
-#' @export
 create_datareq <- function(data.req,
                            varname,
                            remove_unknown_insecticide = TRUE) {
@@ -497,7 +490,6 @@ create_datareq <- function(data.req,
 #'     \code{c("RO", "RO (shelter)", "RO (pit)")}.
 #' }
 #'
-#' @export
 filter_bz_studies <- function(datareq, varname, nice_varname) {
 
   if (nice_varname == "Endophagy") {
@@ -565,8 +557,6 @@ filter_bz_studies <- function(datareq, varname, nice_varname) {
 #'
 #' These steps normalize taxonomic granularity in the dataset, preventing over- or under-representation of records
 #' during model estimation (e.g., of intercepts like `beta0`).
-#'
-#' @export
 augment_with_taxonomy <- function(data, compat) {
 
   data <- dplyr::left_join(data, compat, by = "survey")

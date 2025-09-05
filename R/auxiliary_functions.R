@@ -18,8 +18,6 @@
 #' \dontrun{
 #' df <- read_data_file("countries_continent_region.csv", sep = ";")
 #' }
-#'
-#' @export
 read_data_file <- function(filename, sep = ",") {
   stopifnot(is.character(filename), length(filename) == 1)
   stopifnot(is.character(sep), length(sep) == 1)
@@ -58,8 +56,6 @@ read_data_file <- function(filename, sep = ",") {
 #' \dontrun{
 #' required_cols(data.frame(a = 1), c("a", "b"), "example_df") # Error
 #' }
-#'
-#' @export
 required_cols <- function(df, expected, name) {
   missing <- setdiff(expected, colnames(df))
   if (length(missing) > 0) {

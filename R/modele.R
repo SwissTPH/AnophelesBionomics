@@ -19,8 +19,6 @@
 #'   \item{`species_id`}{Integer vector mapping each observation to a species ID.}
 #'   \item{`species_complex`}{Integer vector mapping each species to a complex ID.}
 #' }
-#'
-#' @export
 prepare_stan_data <- function(data.req, varname) {
 
   num_col <- paste0(varname, ".num")

@@ -26,5 +26,4 @@ required_cols(data.frame(a = 1, b = 2), c("a", "b"), "example_df") # OK
 \dontrun{
 required_cols(data.frame(a = 1), c("a", "b"), "example_df") # Error
 }
-
 }

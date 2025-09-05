@@ -1,8 +1,8 @@
 ---
-title: "Introduction_to_AnophelesBionomics"
+title: "AnophelesBionomics"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to AnophelesBionomics}
+  %\VignetteIndexEntry{AnophelesBionomics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

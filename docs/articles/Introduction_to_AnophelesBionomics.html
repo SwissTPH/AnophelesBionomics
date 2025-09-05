@@ -106,19 +106,22 @@ visualization.</p>
 <p>The model focuses on estimating the following mosquito-related
 parameters:</p>
 <ul>
-<li><p><strong><code>parous_rate</code></strong>: Proportion of
-previously blood-fed female mosquitoes.</p></li>
+<li><p><strong><code>parous_rate</code></strong>: Proportion of parous
+females out of observed females.</p></li>
 <li><p><strong><code>endophagy</code></strong>: Proportion of mosquitoes
 biting indoors versus outdoors.</p></li>
 <li><p><strong><code>endophily</code></strong>: Proportion of mosquitoes
-resting indoors after feeding.</p></li>
-<li><p><strong><code>HBI</code></strong>: Human blood index.</p></li>
+resting indoors after having blood-fed.</p></li>
+<li><p><strong><code>HBI</code></strong>: Human blood inde, the
+proportion of human blood in the blood meal ingested by
+mosquitoes.</p></li>
 <li><p><strong><code>indoor_HBI</code></strong>: Human blood index for
 mosquitoes collected indoors</p></li>
 <li><p><strong><code>outdoor_HBI</code></strong>: Human blood index for
 mosquitoes collected outdoors.</p></li>
-<li><p><strong><code>sac_rate</code></strong>: Proportion of
-sac.</p></li>
+<li><p><strong><code>sac_rate</code></strong>: Proportion of parous
+females which have oviposited less than 24 hours before being
+collected.</p></li>
 </ul>
 <p>The necessary and optional packages required to run the package are
 listed in the appendix.</p>
@@ -219,12 +222,12 @@ optimized for integration into Bayesian analysis pipelines.</p>
 <h3 id="data-visualisation">Data Visualisation<a class="anchor" aria-label="anchor" href="#data-visualisation"></a>
 </h3>
 <p>The function obs_complex_species_pie() allows users to visualize the
-distribution of mosquito observations by species or species complex
-through an interactive pie chart. The function calculates observation
-proportions and consolidates species with very low representation into
-an “Other” category based on a user-defined threshold. Additionally, the
-resulting visualization can be saved as a standalone HTML file if a
-directory is specified.</p>
+distribution of mosquito observations by species or complex through an
+interactive pie chart. The function calculates observation proportions
+and consolidates species with very low representation into an “Other”
+category based on a user-defined threshold. Additionally, the resulting
+visualization can be saved as a standalone HTML file if a directory is
+specified.</p>
 <p>When hovering over a slice, detailed information is displayed,
 including the species or complex name, the total number of observations,
 the number of survey rows, the mean and standard deviation of the
@@ -235,15 +238,15 @@ observation counts identified by a variable name pattern, the base name
 of the variable, and a user-friendly label for output naming. The user
 can adjust the minimum proportion threshold that determines when rare
 species are grouped together. For example, setting this threshold to
-0.05 ensures that only species representing at least 5% of observations
-are shown individually. Finally the user can chose a path in order to
-save his pie. For instance, after preparing the data using the
-preprocessing pipeline, a user might call:</p>
+0.05 means that all categories whose combined total accounts for 5% or
+less of the observations are grouped into “Other”. Finally the user can
+chose a path in order to save his pie. For instance, after preparing the
+data using the preprocessing pipeline, a user might call:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/obs_complex_species_pie.html">obs_complex_species_pie</a></span><span class="op">(</span><span class="va">data</span>, threshold_prop_other <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Proportion de la catégorie 'Other' : 3.08%</span></span></code></pre></div>
 <div class="plotly html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:768px;height:576px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"visdat":{"354454e71fce":["function () ","plotlyVisDat"]},"cur_data":"354454e71fce","attrs":{"354454e71fce":{"labels":{},"values":{},"textposition":"outside","text":{},"hoverinfo":"text","texttemplate":{},"insidetextorientation":"radial","marker":{"colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":0,"l":60,"t":25,"r":10},"annotations":[{"text":"<b>Parous rate<\/b>","x":0.5,"y":0.20999999999999999,"xanchor":"center","yanchor":"bottom","showarrow":false,"font":{"size":25,"family":"Arial","color":"black"},"xref":"paper","yref":"paper"}],"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Complex: Albitarsis","Complex: Funestus","Complex: Gambiae","Complex: Nili","Other","Species: Anopheles funestus","Species: Anopheles gambiae s.s.","Species: Anopheles moucheti"],"values":[3081,5912,36492,4579,2347,2452,17556,3797],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside"],"text":["Complex: Albitarsis<br>Number of observations (sum): 3081<br>Number of surveys (rows): 1<br>Mean value: 0.47<br>SD value: NA<br>Proportion: 4%","Complex: Funestus<br>Number of observations (sum): 5912<br>Number of surveys (rows): 28<br>Mean value: 0.82<br>SD value: 0.11<br>Proportion: 7.8%","Complex: Gambiae<br>Number of observations (sum): 36492<br>Number of surveys (rows): 110<br>Mean value: 0.69<br>SD value: 0.22<br>Proportion: 47.9%","Complex: Nili<br>Number of observations (sum): 4579<br>Number of surveys (rows): 14<br>Mean value: 0.83<br>SD value: 0.13<br>Proportion: 6%","Other<br>Number of observations (sum): 2347<br>Number of surveys (rows): 9<br>Mean value: 0.45<br>SD value: NA<br>Proportion: 3.1%","Species: Anopheles funestus<br>Number of observations (sum): 2452<br>Number of surveys (rows): 26<br>Mean value: 0.72<br>SD value: 0.19<br>Proportion: 3.2%","Species: Anopheles gambiae s.s.<br>Number of observations (sum): 17556<br>Number of surveys (rows): 37<br>Mean value: 0.69<br>SD value: 0.16<br>Proportion: 23%","Species: Anopheles moucheti<br>Number of observations (sum): 3797<br>Number of surveys (rows): 3<br>Mean value: 0.71<br>SD value: 0.05<br>Proportion: 5%"],"hoverinfo":["text","text","text","text","text","text","text","text"],"texttemplate":["Complex: Albitarsis · 4%","Complex: Funestus · 8%","Complex: Gambiae · 48%","Complex: Nili · 6%","Other · 3%","Species: Anopheles funestus · 3%","Species: Anopheles gambiae s.s. · 23%","Species: Anopheles moucheti · 5%"],"insidetextorientation":"radial","marker":{"color":"rgba(31,119,180,1)","colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><p>Similarly, obs_region_pie() generates an interactive pie chart
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"visdat":{"6a9c4d63186e":["function () ","plotlyVisDat"]},"cur_data":"6a9c4d63186e","attrs":{"6a9c4d63186e":{"labels":{},"values":{},"textposition":"outside","text":{},"hoverinfo":"text","texttemplate":{},"insidetextorientation":"radial","marker":{"colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":0,"l":60,"t":25,"r":10},"annotations":[{"text":"<b>Parous rate<\/b>","x":0.5,"y":0.20999999999999999,"xanchor":"center","yanchor":"bottom","showarrow":false,"font":{"size":25,"family":"Arial","color":"black"},"xref":"paper","yref":"paper"}],"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Complex: Albitarsis","Complex: Funestus","Complex: Gambiae","Complex: Nili","Other","Species: Anopheles funestus","Species: Anopheles gambiae s.s.","Species: Anopheles moucheti"],"values":[3081,5912,36492,4579,2347,2452,17556,3797],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside"],"text":["Complex: Albitarsis<br>Number of observations (sum): 3081<br>Number of surveys (rows): 1<br>Mean value: 0.47<br>SD value: NA<br>Proportion: 4%","Complex: Funestus<br>Number of observations (sum): 5912<br>Number of surveys (rows): 28<br>Mean value: 0.82<br>SD value: 0.11<br>Proportion: 7.8%","Complex: Gambiae<br>Number of observations (sum): 36492<br>Number of surveys (rows): 110<br>Mean value: 0.69<br>SD value: 0.22<br>Proportion: 47.9%","Complex: Nili<br>Number of observations (sum): 4579<br>Number of surveys (rows): 14<br>Mean value: 0.83<br>SD value: 0.13<br>Proportion: 6%","Other<br>Number of observations (sum): 2347<br>Number of surveys (rows): 9<br>Mean value: 0.45<br>SD value: NA<br>Proportion: 3.1%","Species: Anopheles funestus<br>Number of observations (sum): 2452<br>Number of surveys (rows): 26<br>Mean value: 0.72<br>SD value: 0.19<br>Proportion: 3.2%","Species: Anopheles gambiae s.s.<br>Number of observations (sum): 17556<br>Number of surveys (rows): 37<br>Mean value: 0.69<br>SD value: 0.16<br>Proportion: 23%","Species: Anopheles moucheti<br>Number of observations (sum): 3797<br>Number of surveys (rows): 3<br>Mean value: 0.71<br>SD value: 0.05<br>Proportion: 5%"],"hoverinfo":["text","text","text","text","text","text","text","text"],"texttemplate":["Complex: Albitarsis · 4%","Complex: Funestus · 8%","Complex: Gambiae · 48%","Complex: Nili · 6%","Other · 3%","Species: Anopheles funestus · 3%","Species: Anopheles gambiae s.s. · 23%","Species: Anopheles moucheti · 5%"],"insidetextorientation":"radial","marker":{"color":"rgba(31,119,180,1)","colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><p>Similarly, obs_region_pie() generates an interactive pie chart
 displaying the geographic distribution of mosquito observations. It
 calculates proportional contributions from regions and labels missing
 regions as “Unspecified”.</p>
@@ -263,12 +266,11 @@ reporting workflows.</p>
 <h3 id="to-build-the-model">To build the model<a class="anchor" aria-label="anchor" href="#to-build-the-model"></a>
 </h3>
 <p>The function run_stan() performs hierarchical Bayesian binomial
-modeling using the rstan package to estimate the distribution of a
-binary trait, such as Human Blood Index or endophagy, across mosquito
-species and species complexes. It executes the complete modeling
-workflow, which includes preparing data in a format compatible with Stan
-via the prepare_stan_data() function, compiling the Stan model, and
-conducting sampling.</p>
+modeling using the rstan package to estimate the distribution of the
+bionomics, across mosquito species and complexes. It executes the
+complete modeling workflow, which includes preparing data in a format
+compatible with Stan via the prepare_stan_data() function, compiling the
+Stan model, and conducting sampling.</p>
 <p>By default, the model runs with 2000 iterations per chain, including
 a warmup (burn-in) period of 400 iterations, distributed over four
 independent chains. These parameters — including the total number of
@@ -290,8 +292,8 @@ if the function is called as</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 8.2e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.82 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000164 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.64 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -308,15 +310,15 @@ if the function is called as</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.118 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                4.119 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                6.237 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.744 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                4.706 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                7.45 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2: Gradient evaluation took 3.6e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.36 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2: Gradient evaluation took 3.4e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.34 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
@@ -333,15 +335,15 @@ if the function is called as</p>
 <span><span class="co">#&gt; Chain 2: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2:  Elapsed Time: 1.372 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 2:                1.165 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2:                2.537 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 2:  Elapsed Time: 1.795 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 2:                1.284 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2:                3.079 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3: Gradient evaluation took 3.3e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3: Gradient evaluation took 4.4e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.</span></span>
 <span><span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
@@ -358,9 +360,9 @@ if the function is called as</p>
 <span><span class="co">#&gt; Chain 3: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 1.185 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                2.098 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                3.283 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 1.427 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                2.305 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                3.732 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3:</span></span>
 <span><span class="co">#&gt; Warning: There were 5 divergent transitions after warmup. See</span></span>
 <span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span></span>
@@ -400,23 +402,22 @@ plot_density()<a class="anchor" aria-label="anchor" href="#visualizing-posterior
 distributions of model parameters after fitting a hierarchical Bayesian
 model via run_stan(). It generates smooth density plots that summarize
 the uncertainty associated with each estimated parameter, grouped by
-taxonomic level—namely genus, species complex, and individual species.
-These visual summaries provide an intuitive and interpretable view of
-the model outputs across mosquito taxa.</p>
+complex. These visual summaries provide an intuitive and interpretable
+view of the model outputs.</p>
 <p>The function expects as input the full named list returned by
 run_stan(), which includes the fitted Stan model object (fit), the
 mapping between individual species and their associated complexes
 (species_complex), and a user-friendly variable label (nice_varname)
 used for titling and file naming. Line styles are used to distinguish
-between taxonomic levels: dotted lines for genus-level parameters,
-long-dashed lines for species complexes, and solid lines for individual
-species. Colors are drawn from a predefined palette, with a fallback to
-default colors and warnings if certain groups are not defined.</p>
+levels: dotted lines for genus-level parameters, long-dashed lines for
+complexes-level, and solid lines for individual species-level. Colors
+are drawn from a predefined palette, with a fallback to default colors
+and warnings if certain groups are not defined.</p>
 <p>Users can optionally filter the visualization to include only
 specific species complexes by supplying a vector to the complex_names
-argument. Parameters labeled with “unlabel” can be excluded using the
-unlabel = TRUE option. If desired, the final plot can also be saved as a
-PNG file by specifying a valid path via the plot_dir argument.</p>
+argument. Parameters labeled with “unlabeled” can be excluded using the
+“unlabel = TRUE” option. If desired, the final plot can also be saved as
+a PNG file by specifying a valid path via the plot_dir argument.</p>
 <p>For example, assuming the model has already been fitted and stored in
 an object called stan_result, the density plot can be generated and
 saved using the following code:</p>
@@ -439,18 +440,17 @@ file.</p>
 </h3>
 <p>The function species_complex_result() extracts and summarizes
 posterior statistics from the hierarchical Bayesian model fitted using
-run_stan(). It organizes the posterior samples by taxonomic level—genus,
-species complex, and species—and produces a tidy data frame ready for
-analysis or reporting.</p>
+run_stan(). It produces a tidy data frame ready for analysis or
+reporting.</p>
 <p>The summary includes formatted posterior estimates with confidence
 intervals, variance measures, and hierarchical metadata. An important
 feature is the option to set all = TRUE, which enables supplementation
-of missing species or complexes using an external compatibility
-taxonomy. In this case, for species without direct data but associated
-with a species complex for which data exist, the function uses the
-complex-level estimates. If no data are available at the complex level,
-the genus-level estimates are used instead. This hierarchical borrowing
-of information ensures more complete coverage.</p>
+of missing species or complexes using the taxonomy. In this case, for
+species without direct data but associated with a species complex for
+which data exist, the function uses the complex-level estimates. If no
+data are available at the complex level, the genus-level estimates are
+used instead. This hierarchical borrowing of information ensures more
+complete coverage.</p>
 <p>Two flags in the output help track this process: the data flag is set
 to TRUE if the estimate is derived from original observed data, and
 FALSE otherwise. The source_flag indicates the level at which the
@@ -494,7 +494,7 @@ have The function Bionomics_For_Anophles_Model(). It wraps and extends
 the logic of species_complex_result(), applying it sequentially to five
 core bionomic traits: Parous rate (M, M.sd), Endophagy (endophagy,
 endophagy.sd), Endophily (endophily, endophily.sd), sac rate (A0,
-A0.sd), human blood index (HBI) (Chi, )</p>
+A0.sd), human blood index (Chi)</p>
 <p>Internally, for each of these parameters, the fonction prepares the
 data using creation_df(), runs the hierarchical Bayesian model with
 run_stan() and extracts posterior summaries via the internal function
@@ -505,18 +505,13 @@ into a single, tidy data frame.</p>
 <p>The function automatically standardizes species and complex names to
 ensure compatibility with the structure expected by the AnophelsModel
 package. This includes renaming known variants (e.g., ‘Anopheles gambiae
-s.s.’ → ‘Anopheles gambiae’ → ‘Gambiae complex’) and inserting a
-synthetic row for the ‘Jamesii complex’.</p>
+s.s.’ → ‘Anopheles gambiae’ → ‘Gambiae complex’).</p>
 <p>To use it, run:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bionomics_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Bionomics_For_Anophles_Model.html">Bionomics_For_Anophles_Model</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bionomics_df</span><span class="op">)</span></span></code></pre></div>
 <p>The output format is specifically designed to plug directly into
-AnophelsModel, Note: the output currently lacks the following columns
-required for full compatibility with AnophelsModel: zeta.3, td, tau, ts,
-and to. These parameters are not estimated by the current hierarchical
-model and should be added manually or completed through another
-estimation source if full model input is needed.</p>
+AnophelsModel.</p>
 <p><br><br><br></p>
 </div>
 <div class="section level3">
@@ -755,11 +750,8 @@ complexes included in the AnophelesBionomics package:</p>
 dataset must include:</p>
 <ul>
 <li>
-<strong><code>species</code></strong> — The mosquito species name
-(e.g., An. gambiae).</li>
-<li>
-<strong><code>insecticide_control</code></strong> — Indicates if
-insecticide was present (“t” for true, “f” for false).</li>
+<strong><code>species</code></strong> — The mosquito species or
+complex name.</li>
 <li>
 <strong><code>country</code></strong> — The country where the data
 was collected.</li>
@@ -822,8 +814,10 @@ estimate indoor_biting_n if needed, NA otherwise.</li>
 <strong><code>outdoor_biting_sampling</code></strong> — Must be
 “MBO”.</li>
 <li>
-<strong><code>HLC_same</code></strong> — Must be TRUE, indicating
-same design indoors and outdoors.</li>
+<strong><code>HLC_same</code></strong> — Must be TRUE, indicatting
+if the estimation used is Human Landing Catches ( adults sit indoors or
+outdoors with their legs exposed and wait until a mosquito lands on
+their legs to catch it ).</li>
 <li>
 <strong><code>insecticide_control</code></strong> — Must be
 “f”.</li>
@@ -835,11 +829,11 @@ same design indoors and outdoors.</li>
 <p>To calculate endophily, your dataset must include:</p>
 <ul>
 <li>
-<strong><code>indoor_fed</code></strong> — Number of mosquitoes fed
-indoors.</li>
+<strong><code>indoor_fed</code></strong> — Number of mosquitoes
+resting indoors after having blood-fed.</li>
 <li>
-<strong><code>outdoor_fed</code></strong> — Number fed
-outdoors.</li>
+<strong><code>outdoor_fed</code></strong> — Number of mosquitoes
+resting outdoors after having blood-fed.</li>
 <li>
 <strong><code>resting_unit</code></strong> — Must be either “%” or
 “count”.</li>
@@ -886,11 +880,11 @@ TRUE.</li>
 <p>To calculate sac rate, your dataset must include:</p>
 <ul>
 <li>
-<strong><code>parous_with_sac</code></strong> — Number of parous
-mosquitoes with sac (numerator).</li>
+<strong><code>parous_with_sac</code></strong> — of parous females
+which have oviposited less than 24 hours before being collected.</li>
 <li>
-<strong><code>parous</code></strong> — Total number of parous
-mosquitoes (denominator).</li>
+<strong>`parous</strong> — Total number of parous mosquitoes
+(denominator).</li>
 <li>
 <strong><code>sac_rate_percent</code></strong> — Percentage; used to
 estimate parous_with_sac if needed, NA otherwise.</li>
@@ -906,17 +900,17 @@ estimate parous_with_sac if needed, NA otherwise.</li>
 include:</p>
 <ul>
 <li>
-<strong><code>indoor_host_sampling</code></strong> — Must be one of
-“HRI”, “ILT”, or “WinExit”.</li>
-<li>
 <strong><code>indoor_host_n</code></strong> — Number of mosquitoes
-feeding on humans indoors.</li>
+having ingested human blood indoors.</li>
 <li>
-<strong><code>indoor_host_total</code></strong> — Total mosquitoes
-tested indoors.</li>
+<strong><code>indoor_host_total</code></strong> — Number of
+mosquitoes examined for blood meal origin indoors.</li>
 <li>
 <strong><code>indoor_host</code></strong> — Percentage; used to
 estimate indoor_host_n if needed, NA otherwise.</li>
+<li>
+<strong><code>indoor_host_sampling</code></strong> — Must be one of
+“HRI”, “ILT”, or “WinExit”.</li>
 <li>
 <strong><code>host_unit</code></strong> — Must NOT be “AI” (animal
 index).</li>
@@ -928,17 +922,17 @@ index).</li>
 must include:</p>
 <ul>
 <li>
-<strong><code>outdoor_host_sampling</code></strong> — Must be one of
-“RO”, “RO (shelter)”, “RO (pit)”, or “WinExit”.</li>
-<li>
 <strong><code>outdoor_host_n</code></strong> — Number of mosquitoes
-feeding on humans outdoors.</li>
+having ingested human blood outdoors.</li>
 <li>
-<strong><code>outdoor_host_total</code></strong> — Total mosquitoes
-tested outdoors.</li>
+<strong><code>outdoor_host_total</code></strong> — Number of
+mosquitoes examined for blood meal origin outdoors.</li>
 <li>
 <strong><code>outdoor_host</code></strong> — Percentage; used to
 estimate outdoor_host_n if needed, NA otherwise.</li>
+<li>
+<strong><code>outdoor_host_sampling</code></strong> — Must be one of
+“RO”, “RO (shelter)”, “RO (pit)”, or “WinExit”.</li>
 <li>
 <strong><code>host_unit</code></strong> — Must NOT be “AI” (animal
 index).</li>
@@ -951,20 +945,20 @@ outdoor), your dataset must also, as well that the precedente colomns
 include:</p>
 <ul>
 <li>
-<strong><code>combined_host_sampling_1</code></strong> — Main
-sampling method used, must be valid.</li>
-<li>
 <strong><code>combined_host_n</code></strong> — Number of mosquitoes
-feeding on humans.</li>
+having ingested human blood.</li>
 <li>
-<strong><code>combined_host_total</code></strong> — Total mosquitoes
-tested.</li>
+<strong><code>combined_host_total</code></strong> — Number of
+mosquitoes examined for blood meal origin.</li>
 <li>
 <strong><code>combined_host</code></strong> — Percentage; used to
 estimate combined_host_n if needed, NA otherwise.</li>
 <li>
 <strong><code>combined_host_sampling_n</code></strong> — Must NOT be
 “t”.</li>
+<li>
+<strong><code>combined_host_sampling_1</code></strong> — Main
+sampling method used, must be valid (different of ““).</li>
 <li>
 <strong><code>insecticide_control</code></strong> — Must be
 “f”.</li>
