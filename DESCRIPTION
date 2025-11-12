@@ -1,0 +1,39 @@
+Package: AnophelesBionomics
+Type: Package
+Title: Analysis Tools for Anopheles Mosquito Bionomics
+Version: 0.1.0
+Authors@R: person("Aurélien", "Tarroux", email = "aurelien.tarroux@swisstph.ch", role = c("aut", "cre"))
+Description: Provides functions for preparing data, running Bayesian hierarchical models using Stan, 
+    and visualizing species and complex-level bionomic parameters of Anopheles mosquitoes.
+    Includes data manipulation, plotting, and model summarization utilities.
+License: GPL (>=2)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Imports:
+    stats,
+    dplyr,
+    ggplot2,
+    rstan,
+    plotly,
+    coda,
+    htmlwidgets,
+    shiny,
+    cowplot,
+    rlang,
+    stringr,
+    tidyr
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    ggpubr,
+    egg,
+    rlist,
+    grid,
+    gridExtra,
+    reshape2
+VignetteBuilder: rmarkdown, knitr
+Config/testthat/edition: 3
+Depends: R (>=  4.1.0)
+URL: https://SwissTPH.github.io/AnophelesBionomics

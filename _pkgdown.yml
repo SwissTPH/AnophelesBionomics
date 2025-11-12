@@ -1,0 +1,6 @@
+url: https://SwissTPH.github.io/AnophelesBionomics
+favicon: inst/app/www/favicon.ico
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
