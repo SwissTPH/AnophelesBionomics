@@ -34,8 +34,8 @@
 #' - If `path` is provided, the function saves the figure as a high-resolution PNG.
 #'
 #' @export
-
 plot_lolipop <- function(data, varname, path = NULL) {
+
   data_2 <- data$data.req
   species_complex <- data$species_complex
 
@@ -45,6 +45,7 @@ plot_lolipop <- function(data, varname, path = NULL) {
   if ("species" %in% names(species_complex)) {
     data_2 <- left_join(data_2, species_complex, by = c("name" = "species"))
     possible_cols <- intersect(c("complex", "complex.x", "complex.y"), names(data_2))
+    if (length(possible_cols) == 0) stop("Aucune colonne 'complex' trouvée après la jointure.")
     data_2 <- data_2 %>%
       rename(higher_level = !!sym(possible_cols[1])) %>%
       mutate(higher_level = sub("_complex$", "", higher_level))
@@ -60,14 +61,6 @@ plot_lolipop <- function(data, varname, path = NULL) {
   grouped_df <- group_by(data_2, higher_level)
   split_list <- group_split(grouped_df)
   group_names <- pull(group_keys(grouped_df), higher_level)
-
-  # ---- NEW: merge all groups if some have only one species ----
-  group_sizes <- sapply(split_list, function(df) length(unique(df$name)))
-  if (any(group_sizes == 1)) {
-    split_list <- list(data_2)
-    group_names <- "All species (merged)"
-  }
-  # -------------------------------------------------------------
 
   y_col <- sym(paste0(varname, ".den"))
 
@@ -1409,7 +1402,7 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
         label_pct = paste0(label, " : ", round(prop * 100), "%"),
         label = factor(label, levels = label)
       )
-    View(data_clean)
+
     all_data_clean_list[[varname]] <<- data_clean
 
     ggplot2::ggplot(data_clean, ggplot2::aes(x = "", y = prop, fill = label)) +
