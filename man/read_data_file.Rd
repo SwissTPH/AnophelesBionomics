@@ -28,4 +28,5 @@ It verifies the file exists inside the package before attempting to read it.
 \dontrun{
 df <- read_data_file("countries_continent_region.csv", sep = ";")
 }
+
 }

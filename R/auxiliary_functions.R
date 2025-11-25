@@ -18,6 +18,8 @@
 #' \dontrun{
 #' df <- read_data_file("countries_continent_region.csv", sep = ";")
 #' }
+#'
+#' @export
 read_data_file <- function(filename, sep = ",") {
   stopifnot(is.character(filename), length(filename) == 1)
   stopifnot(is.character(sep), length(sep) == 1)

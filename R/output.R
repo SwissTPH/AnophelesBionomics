@@ -61,6 +61,14 @@ plot_lolipop <- function(data, varname, path = NULL) {
   split_list <- group_split(grouped_df)
   group_names <- pull(group_keys(grouped_df), higher_level)
 
+  # ---- NEW: merge all groups if some have only one species ----
+  group_sizes <- sapply(split_list, function(df) length(unique(df$name)))
+  if (any(group_sizes == 1)) {
+    split_list <- list(data_2)
+    group_names <- "All species (merged)"
+  }
+  # -------------------------------------------------------------
+
   y_col <- sym(paste0(varname, ".den"))
 
   var_labels <- c(
