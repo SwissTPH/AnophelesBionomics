@@ -306,46 +306,55 @@ set_var_params <- function(varname, repo) {
     }
   } else if (varname == "resting_duration") {
 
+    dplyr::filter(repo, !(resting_unit %in% c("", "per man hour", "Per man hour")) & indoor_resting_sampling != "") |>
+      dplyr::select(-c(outdoor_resting_sampling:other_total)) |>
+      dplyr::rename_with(~gsub("indoor_", "", .), indoor_resting_sampling:indoor_total) |>
+      dplyr::mutate(location = "indoors")
 
-    fed_gravid_indoors <- repo %>% filter(!(resting_unit %in% c("", "per man hour", "Per man hour")) & indoor_resting_sampling != "") %>%
-      select(-c(outdoor_resting_sampling:other_total)) %>%
-      rename_with(~gsub("indoor_", "", .), indoor_resting_sampling:indoor_total) %>%
-      mutate(location = "indoors")
+    fed_gravid_indoors <- repo |>
+      dplyr::filter(!(resting_unit %in% c("", "per man hour", "Per man hour")) & indoor_resting_sampling != "") |>
+      dplyr::select(-c(outdoor_resting_sampling:other_total)) |>
+      dplyr::rename_with(~gsub("indoor_", "", .), indoor_resting_sampling:indoor_total) |>
+      dplyr::mutate(location = "indoors")
 
-    fed_gravid_outdoors <- repo %>% filter(!(resting_unit %in% c("", "per man hour", "Per man hour")) & outdoor_resting_sampling != "") %>%
-      select(-c(indoor_resting_sampling:indoor_total, other_resting_sampling:other_total)) %>%
-      rename_with(~gsub("outdoor_", "", .), outdoor_resting_sampling:outdoor_total) %>%
-      mutate(location = ifelse(resting_sampling == "WinExit", "indoors", "outdoors"))
+    fed_gravid_outdoors <- repo |>
+      dplyr::filter(!(resting_unit %in% c("", "per man hour", "Per man hour")) & outdoor_resting_sampling != "") |>
+      dplyr::select(-c(indoor_resting_sampling:indoor_total, other_resting_sampling:other_total)) |>
+      dplyr::rename_with(~gsub("outdoor_", "", .), outdoor_resting_sampling:outdoor_total) |>
+      dplyr::mutate(location = dplyr::if_else(resting_sampling == "WinExit", "indoors", "outdoors"))
 
-    fed_gravid_others <- repo %>% filter(!(resting_unit %in% c("", "per man hour", "Per man hour")) & other_resting_sampling != "") %>%
-      select(-c(indoor_resting_sampling:outdoor_total)) %>%
-      rename_with(~gsub("other_", "", .), other_resting_sampling:other_total) %>%
-      mutate(location = ifelse(resting_sampling %in% c("HRI", "WinExit"), "indoors",
-                               ifelse(grepl("RO", resting_sampling), "outdoors", "other")))
+    fed_gravid_others <- repo |>
+      dplyr::filter(!(resting_unit %in% c("", "per man hour", "Per man hour")) & other_resting_sampling != "") |>
+      dplyr::select(-c(indoor_resting_sampling:outdoor_total)) |>
+      dplyr::rename_with(~gsub("other_", "", .), other_resting_sampling:other_total) |>
+      dplyr::mutate(location = dplyr::if_else(resting_sampling %in% c("HRI", "WinExit"), "indoors",
+                                              dplyr::if_else(grepl("RO", resting_sampling), "outdoors", "other")))
 
-    repo <- rbind(rbind(fed_gravid_indoors, fed_gravid_outdoors), fed_gravid_others) %>% distinct() %>%
-      mutate(resting_duration = ifelse(resting_unit == "fed:gravid",
-                                       ifelse(fed == 1, 1/gravid + 1, 1/fed + 1),
-                                       gravid/fed + 1))
+    repo <- dplyr::bind_rows(fed_gravid_indoors, fed_gravid_outdoors, fed_gravid_others) |>
+      dplyr::distinct() |>
+      dplyr::mutate(resting_duration = dplyr::if_else(resting_unit == "fed:gravid",
+                                                      dplyr::if_else(fed == 1, 1/gravid + 1, 1/fed + 1),
+                                                      gravid/fed + 1))
 
     create_datareq_rest <- function(repo, observation_variables, reqP = NULL){
-      repo$intervened = with(repo, ifelse(insecticide_control == 'f ', 2, as.numeric(as.factor(insecticide_control))))
-      data.req <- repo %>% filter(!is.na(get(observation_variables)) & !is.infinite(get(observation_variables)))
+      repo$intervened <- dplyr::if_else(repo$insecticide_control == 'f ', 2, as.numeric(as.factor(repo$insecticide_control)))
 
-      data.req <- data.req %>% filter(intervened == 2)
+      data.req <- repo |>
+        dplyr::filter(!is.na(dplyr::pull(repo, observation_variables)) & !is.infinite(dplyr::pull(repo, observation_variables)))
+
+      data.req <- data.req |> dplyr::filter(intervened == 2)
 
       return(data.req)
     }
 
     observation_variables <- "resting_duration"
-    repo = create_datareq_rest(repo, observation_variables)
-
+    repo <- create_datareq_rest(repo, observation_variables)
 
     repo$deno_rest <- as.integer(repo$fed + repo$gravid)
     repo$fed <- as.integer(repo$fed)
 
-    repo <- repo %>% select(-resting_duration)
-    repo <- repo %>% select(-total)
+    repo <- repo |> dplyr::select(-resting_duration)
+    repo <- repo |> dplyr::select(-total)
 
     nice_varname <- "Resting duration from fed/gravid ratio"
     varname <- "resting_duration"
@@ -353,6 +362,7 @@ set_var_params <- function(varname, repo) {
     denominator_variables <- "deno_rest"
     percentage_variables <- "unfed"
     remove_unknown_insecticide <- FALSE
+
   } else {
      stop("Unrecognized variable name. Supported variables: parous_rate, endophagy, endophily, outdoor_HBI, indoor_HBI, HBI, sac_rate, resting_duration.")
   }

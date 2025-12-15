@@ -34,35 +34,33 @@
 #' - If `path` is provided, the function saves the figure as a high-resolution PNG.
 #'
 #' @export
-plot_lolipop <- function(data, varname, path = NULL) {
+plot_lollipop <- function(data, varname, path = NULL) {
 
-  data_2 <- data$data.req
+  dplyr::mutate(data$data.req, name = sub("^unlabeled\\s+", "", data$data.req$name))
+
   species_complex <- data$species_complex
 
-  data_2 <- data_2 %>%
-    mutate(name = sub("^unlabeled\\s+", "", name))
-
   if ("species" %in% names(species_complex)) {
-    data_2 <- left_join(data_2, species_complex, by = c("name" = "species"))
+    data_2 <- dplyr::left_join(data$data.req, species_complex, by = c("name" = "species"))
     possible_cols <- intersect(c("complex", "complex.x", "complex.y"), names(data_2))
     if (length(possible_cols) == 0) stop("Aucune colonne 'complex' trouvée après la jointure.")
-    data_2 <- data_2 %>%
-      rename(higher_level = !!sym(possible_cols[1])) %>%
-      mutate(higher_level = sub("_complex$", "", higher_level))
+    data_2 <- data_2 |>
+      dplyr::rename(higher_level = !!rlang::sym(possible_cols[1])) |>
+      dplyr::mutate(higher_level = sub("_complex$", "", higher_level))
   }
 
   colors_map <- read_data_file(file = "new_palette_density_plots.csv")
   missing_names <- setdiff(unique(data_2$name), colors_map$name)
   if (length(missing_names) > 0) {
-    colors_map <- bind_rows(colors_map, data.frame(name = missing_names, pal = "#D3D3D3"))
+    colors_map <- dplyr::bind_rows(colors_map, data.frame(name = missing_names, pal = "#D3D3D3"))
   }
-  data_2 <- left_join(data_2, colors_map, by = "name")
+  data_2 <- dplyr::left_join(data_2, colors_map, by = "name")
 
-  grouped_df <- group_by(data_2, higher_level)
-  split_list <- group_split(grouped_df)
-  group_names <- pull(group_keys(grouped_df), higher_level)
+  grouped_df <- dplyr::group_by(data_2, higher_level)
+  split_list <- dplyr::group_split(grouped_df)
+  group_names <- dplyr::pull(dplyr::group_keys(grouped_df), higher_level)
 
-  y_col <- sym(paste0(varname, ".den"))
+  y_col <- rlang::sym(paste0(varname, ".den"))
 
   var_labels <- c(
     endophagy = "Endophagy",
@@ -76,29 +74,29 @@ plot_lolipop <- function(data, varname, path = NULL) {
 
   p_list <- lapply(seq_along(split_list), function(i) {
     sub_df <- droplevels(split_list[[i]])
-    p <- ggplot(sub_df, aes(x = value, y = !!y_col)) +
-      geom_segment(aes(x = value, xend = value, y = 0, yend = !!y_col),
-                   color = "grey80", linewidth = 0.5) +
-      geom_point(aes(color = pal), alpha = 0.8, size = 3) +
-      scale_color_identity() +
-      scale_x_continuous(limits = c(0, 1)) +
-      labs(x = NULL, y = NULL) +
-      theme_minimal() +
-      theme(
-        text = element_text(size = 12),
-        plot.title = element_blank(),
-        axis.title.x = element_text(size = 13),
-        axis.title.y = element_text(size = 13)
+    p <- ggplot2::ggplot(sub_df, ggplot2::aes(x = value, y = !!y_col)) +
+      ggplot2::geom_segment(ggplot2::aes(x = value, xend = value, y = 0, yend = !!y_col),
+                            color = "grey80", linewidth = 0.5) +
+      ggplot2::geom_point(ggplot2::aes(color = pal), alpha = 0.8, size = 3) +
+      ggplot2::scale_color_identity() +
+      ggplot2::scale_x_continuous(limits = c(0, 1)) +
+      ggplot2::labs(x = NULL, y = NULL) +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
+        text = ggplot2::element_text(size = 12),
+        plot.title = ggplot2::element_blank(),
+        axis.title.x = ggplot2::element_text(size = 13),
+        axis.title.y = ggplot2::element_text(size = 13)
       )
 
     legend_df <- unique(sub_df[, c("name", "pal")])
-    legend_plot <- ggplot(legend_df, aes(x = 1, y = reorder(name, desc(name)), color = pal)) +
-      geom_point(size = 4) +
-      geom_text(aes(label = name), hjust = 0, nudge_x = 0.1, color = "black", size = 4) +
-      scale_color_identity() +
-      theme_void() +
-      theme(plot.margin = margin(5, 20, 5, 5), legend.position = "none") +
-      xlim(1, 3)
+    legend_plot <- ggplot2::ggplot(legend_df, ggplot2::aes(x = 1, y = reorder(name, desc(name)), color = pal)) +
+      ggplot2::geom_point(size = 4) +
+      ggplot2::geom_text(ggplot2::aes(label = name), hjust = 0, nudge_x = 0.1, color = "black", size = 4) +
+      ggplot2::scale_color_identity() +
+      ggplot2::theme_void() +
+      ggplot2::theme(plot.margin = ggplot2::margin(5, 20, 5, 5), legend.position = "none") +
+      ggplot2::xlim(1, 3)
 
     cowplot::plot_grid(p, legend_plot, rel_widths = c(0.65, 0.35))
   })
@@ -118,11 +116,11 @@ plot_lolipop <- function(data, varname, path = NULL) {
 
   if (!is.null(path)) {
     if (!dir.exists(dirname(path))) dir.create(dirname(path), recursive = TRUE)
-    ggsave(path, plot = combined,
-           width = 10,
-           height = length(p_list) * 2,
-           dpi = 300,
-           device = "png")
+    ggplot2::ggsave(path, plot = combined,
+                    width = 10,
+                    height = length(p_list) * 2,
+                    dpi = 300,
+                    device = "png")
   }
 
   return(combined)
@@ -229,13 +227,13 @@ obs_complex_species_pie <- function(data,
           "Number of surveys (rows): ", nb_lines, "<br>",
           "Mean value: ", round_fun(mean_value, 2), "<br>",
           "SD value: ", round_fun(sd_value, 2), "<br>",
-          "Proportion: ", round_fun(prop * 100, 1), "%"
+          "Proportion: ", round_fun(prop, 1)  # Sans multiplication par 100
         ),
-        label_text = paste0(label_grouped, " : ", round_fun(prop * 100), "%")
+        label_text = paste0(label_grouped, " : ", round_fun(prop, 1))
       )
 
     message("Proportion of the 'Other' category' : ",
-            round_fun(sum_fun(data_grouped$prop[data_grouped$label_grouped == "Other"]) * 100, 2), "%")
+            round_fun(sum_fun(data_grouped$prop[data_grouped$label_grouped == "Other"]), 2))
   } else {
     data_grouped <- data_clean |>
       dplyr::mutate(
@@ -248,9 +246,9 @@ obs_complex_species_pie <- function(data,
           "Number of surveys (rows): ", nb_lines, "<br>",
           "Mean value: ", round_fun(mean_value, 2), "<br>",
           "SD value: ", round_fun(sd_value, 2), "<br>",
-          "Proportion: ", round_fun(prop * 100, 1), "%"
+          "Proportion: ", round_fun(prop, 1)  # Sans multiplication par 100
         ),
-        label_text = paste0(label_grouped, " : ", round_fun(prop * 100), "%")
+        label_text = paste0(label_grouped, " : ", round_fun(prop, 1))
       )
   }
 
@@ -736,7 +734,7 @@ plot_density <- function(stan_results,
 #' @return A data.frame with summarized posterior statistics including:
 #'   - `name`: Taxonomic unit name (genus, complex, or species),
 #'   - `level`: Taxonomic level ("genus", "complex", or "species"),
-#'   - `estimate_ci`: Formatted estimate with confidence interval as a percentage string,
+#'   - `mean`: Formatted estimate
 #'   - `variance`: Variance of the estimate,
 #'   - `ci_lower`: Lower bound of the confidence interval,
 #'   - `ci_upper`: Upper bound of the confidence interval,
@@ -838,78 +836,12 @@ species_complex_result <- function(results,
   genus_est$name <- "Anopheles"
 
   res <- dplyr::bind_rows(genus_est, p1_df, p2_df) |>
-    dplyr::select(name, level, estimate, variance, ci_lower, ci_upper) |>
-    dplyr::mutate(
-      margin_error = base::pmax(ci_upper - estimate, estimate - ci_lower),
-      estimate_pct = estimate * 100,
-      margin_error_pct = margin_error * 100,
-      estimate_ci = base::paste0(
-        base::round(estimate_pct, 2), "% +/- ", base::round(margin_error_pct, 2), "% (CI ", 0.95 * 100, "%)"
-      )
-    ) |>
-    dplyr::select(name, level, estimate_ci, variance, ci_lower, ci_upper)
-
-  species_to_complex <- SP |>
-    dplyr::filter(!base::is.na(species), !base::is.na(complex)) |>
-    dplyr::distinct(species, complex)
-
-  res <- res |>
-    dplyr::left_join(species_to_complex, by = c("name" = "species")) |>
-    dplyr::mutate(complex = dplyr::if_else(level == "species", complex, NA_character_))
+    dplyr::select(name, level, estimate, variance, ci_lower, ci_upper)
 
   res_clean <- res |>
-    dplyr::filter(!base::grepl("complex", name, ignore.case = TRUE))
-  unlabelled_rows <- res_clean |>
-    dplyr::filter(base::grepl("unlabeled", name, ignore.case = TRUE))
-
-  for (i in base::seq_len(base::nrow(unlabelled_rows))) {
-    unlabel_name <- unlabelled_rows$name[i]
-    sp_info <- SP |>
-      dplyr::filter(species == unlabel_name)
-
-    if (base::nrow(sp_info) == 1) {
-      complex_name <- sp_info$complex
-      n_species <- SP |>
-        dplyr::filter(complex == complex_name) |>
-        base::nrow()
-
-      if (n_species == 1) {
-        existing_complex_row <- res_clean |>
-          dplyr::filter(name == complex_name, level == "complex")
-
-        if (base::nrow(existing_complex_row) == 1) {
-          new_row <- unlabelled_rows[i, ]
-          new_row$name <- complex_name
-          new_row$complex <- NA_character_
-          new_row$level <- "complex"
-
-          res_clean <- res_clean |>
-            dplyr::filter(!(name == complex_name & level == "complex"))
-          res_clean <- dplyr::bind_rows(res_clean, new_row)
-
-        } else {
-          res_clean <- res_clean |>
-            dplyr::mutate(
-              level = dplyr::if_else(name == unlabel_name, "complex", level),
-              name  = dplyr::if_else(name == unlabel_name, complex_name, name),
-              complex = dplyr::if_else(name == complex_name, NA_character_, complex)
-            )
-        }
-      } else {
-        res_clean <- res_clean |>
-          dplyr::filter(name != unlabel_name)
-      }
-    } else {
-      res_clean <- res_clean |>
-        dplyr::filter(name != unlabel_name)
-    }
-  }
-
-  res_clean <- res_clean |>
     dplyr::filter(!base::grepl("unlabeled", name, ignore.case = TRUE))
 
   if (all) {
-
     compat_repo <- read_data_file("compatibility_repo_taxonomy_v2.csv", sep = ";")
 
     if (!"complex" %in% base::names(res_clean)) {
@@ -981,13 +913,17 @@ species_complex_result <- function(results,
       }
     }
   }
+  res_clean <- res_clean|>
+    dplyr::filter(!is.na(name))
   if (!is.null(output_dir)) {
-      filename <- base::paste0("stan_summary", varname, ".csv")
-      output_path <- base::file.path(output_dir, filename)
-      write.csv(res_clean, output_path, row.names = FALSE)
-      return(res_clean)
+    filename <- base::paste0("stan_summary", varname, ".csv")
+    output_path <- base::file.path(output_dir, filename)
+    write.csv(res_clean, output_path, row.names = FALSE)
+    return(res_clean)
   }
+
   return(res_clean)
+
 }
 
 
@@ -1241,7 +1177,7 @@ Bionomics_For_Anophles_Model <- function() {
 
 
 
-  varnames <- c("parous_rate", "endophagy", "endophily", "sac_rate", "HBI","resting_duration")
+  varnames <- c("parous_rate", "endophagy", "endophily", "sac_rate", "indoor_HBI","outdoor_HBI","resting_duration")
 
   final_df <- NULL
 

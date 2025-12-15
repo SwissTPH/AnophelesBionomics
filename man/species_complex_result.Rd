@@ -19,7 +19,7 @@ species_complex_result(results, all = FALSE, output_dir = NULL)
 A data.frame with summarized posterior statistics including:
   - `name`: Taxonomic unit name (genus, complex, or species),
   - `level`: Taxonomic level ("genus", "complex", or "species"),
-  - `estimate_ci`: Formatted estimate with confidence interval as a percentage string,
+  - `mean`: Formatted estimate
   - `variance`: Variance of the estimate,
   - `ci_lower`: Lower bound of the confidence interval,
   - `ci_upper`: Upper bound of the confidence interval,
