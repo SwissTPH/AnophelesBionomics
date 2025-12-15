@@ -841,18 +841,18 @@ species_complex_result <- function(results,
   res_clean <- res |>
     dplyr::filter(!base::grepl("unlabeled", name, ignore.case = TRUE))
 
+  res_clean <- res_clean |>
+    dplyr::mutate(
+      name = base::gsub("_complex", "", name)
+    )
+
   if (all) {
     compat_repo <- read_data_file("compatibility_repo_taxonomy_v2.csv", sep = ";")
 
-    if (!"complex" %in% base::names(res_clean)) {
-      res_clean$complex <- NA_character_
-    }
 
     res_clean <- res_clean |>
       dplyr::mutate(
-        data = TRUE,
-        source_flag = base::as.integer(NA)
-      )
+        data = TRUE)
 
     for (i in base::seq_len(base::nrow(compat_repo))) {
       sp <- compat_repo$species[i]
@@ -867,10 +867,7 @@ species_complex_result <- function(results,
             dplyr::mutate(
               name = sp,
               level = "species",
-              data = FALSE,
-              source_flag = 1L,
-              complex = cx
-            )
+              data = FALSE            )
           res_clean <- dplyr::bind_rows(res_clean, new_row)
           next
         }
@@ -883,9 +880,7 @@ species_complex_result <- function(results,
             dplyr::mutate(
               name = sp,
               level = "species",
-              data = FALSE,
-              source_flag = 3L,
-              complex = cx
+              data = FALSE
             )
           res_clean <- dplyr::bind_rows(res_clean, new_row)
         } else {
@@ -902,9 +897,7 @@ species_complex_result <- function(results,
             dplyr::mutate(
               name = cx,
               level = "complex",
-              data = FALSE,
-              source_flag = 4L,
-              complex = NA_character_
+              data = FALSE
             )
           res_clean <- dplyr::bind_rows(res_clean, new_row)
         } else {
@@ -929,63 +922,73 @@ species_complex_result <- function(results,
 
 
 
-
-
-#' Estimate Species-Specific Bionomic Traits for Anopheles Using a Hierarchical Bayesian Model
+#' Estimate Species-Specific Bionomic Traits for Anopheles Using a Hierarchical Bayesian Framework
 #'
-#' This function estimates various bionomic parameters (e.g., parous rate, endophagy, endophily,
-#' sac rate, and human blood index) for Anopheles mosquitoes at three taxonomic levels: genus,
-#' species complex, and species. It fits a hierarchical Bayesian model for each trait using Stan,
-#' and merges the results into a single tidy data frame.
+#' This function estimates key bionomic traits of *Anopheles* mosquitoes using a set of
+#' hierarchical Bayesian models fitted independently for each trait across three taxonomic
+#' levels: genus, species complex, and species. The estimated traits include parous rate,
+#' endophagy, endophily, sac rate, indoor and outdoor human blood indices, and resting duration.
 #'
-#' Internally, it calls `creation_df()` to prepare input data for each trait, and `run_stan()` to
-#' perform Bayesian inference using Stan. The posterior summaries are processed by an internal function
-#' to aggregate results across levels and to impute missing species based on known complexes or genus-level data.
+#' For human blood feeding behaviour, indoor and outdoor human blood indices are first estimated
+#' separately. The overall human blood index (HBI, denoted \code{Chi}) is then derived a posteriori
+#' as a deterministic function of endophagy:
+#' \deqn{
+#'   Chi = indoor\_HBI \times endophagy + outdoor\_HBI \times (1 - endophagy)
+#' }
+#' Indoor and outdoor HBI estimates are not returned in the final output.
 #'
-#' @return A `data.frame` containing bionomic estimates for each species or complex, with the following columns:
+#' Resting duration is estimated by the model and returned as the parameter \code{tau},
+#' preserving compatibility with downstream transmission models.
+#'
+#' Internally, the function relies on \code{creation_df()} to format input data for each trait and
+#' \code{run_stan()} to perform Bayesian inference using Stan. Posterior summaries are aggregated
+#' across taxonomic levels using an internal helper function, and missing species or complexes are
+#' imputed using information from higher taxonomic levels when necessary.
+#'
+#' @return A \code{data.frame} containing bionomic estimates for each species, species complex,
+#' or genus, with the following columns:
 #'   \describe{
-#'     \item{species_name}{Name of the species, complex, or genus (e.g., `"Anopheles gambiae"`, `"Gambiae complex"`, `"GENUS"`).}
+#'     \item{species_name}{Name of the species, complex, or genus (e.g., \code{"Anopheles gambiae"},
+#'       \code{"Gambiae complex"}, \code{"GENUS"}).}
 #'     \item{M, M.sd}{Parous rate and its standard deviation.}
 #'     \item{endophagy, endophagy.sd}{Endophagy level and its standard deviation.}
 #'     \item{endophily, endophily.sd}{Endophily level and its standard deviation.}
 #'     \item{A0, A0.sd}{Sac rate and its standard deviation.}
-#'     \item{Chi}{Human blood index (HBI)}
+#'     \item{Chi}{Overall human blood index (HBI), derived from indoor and outdoor components.}
+#'     \item{tau, tau.sd}{Resting duration and its standard deviation.}
 #'   }
 #'
 #' @details
-#' The function handles missing data by imputing estimates based on available data at the complex or genus level.
-#' It also performs name normalization (e.g., mapping `"Anopheles gambiae s.s. / Colluzi"` to `"Anopheles gambiae"` and
-#' `"Anopheles gambiae"` to `"Gambiae complex"`). A synthetic `"Jamesii complex"` row is added based on genus-level data.
-#'
-#' A side-effect is the use of `print()` statements during model fitting to indicate progress.
+#' Missing species-level estimates are imputed using available information at the species-complex
+#' or genus level, following a predefined taxonomic compatibility table. Species and complex names
+#' are normalised (e.g., mapping \code{"Anopheles gambiae s.s. / Colluzi"} to
+#' \code{"Anopheles gambiae"}, and genus-level estimates are labelled as \code{"GENUS"}).
+#' A synthetic \code{"Jamesii complex"} row is added based on genus-level estimates to ensure
+#' completeness of the output.
 #'
 #' @note
-#' This function assumes that `creation_df()` and `run_stan()` are defined in the environment and return appropriately
-#' formatted data and model results.
-#'
+#' This function assumes that \code{creation_df()} and \code{run_stan()} are available in the
+#' environment and return appropriately formatted data and fitted Stan model objects.
 #'
 #' @export
-Bionomics_For_Anophles_Model <- function() {
+Bionomics_For_AnopholesModel <- function() {
 
 
-  species_complex_result_ano_model <- function(results,
-                                               all = TRUE,
-                                               output_dir = NULL) {
+  species_complex_result_ano_model <- function(results, all = TRUE) {
 
     stan_fit <- results$fit
     SP <- results$species_complex
     varname <- results$varname
 
-    stan_fit <- results$fit
-    SP <- results$species_complex
-    varname <- results$varname
-
-    posterior_samples <- do.call(rbind, fit)
+    posterior_samples <- do.call(rbind, stan_fit)
 
     summary_stats <- data.frame(
       mean = apply(posterior_samples, 2, mean),
-      sd = apply(posterior_samples, 2, sd),
+      sd = apply(posterior_samples, 2, sd)
     )
+
+    param_names <- colnames(stan_fit[[1]])
+    rownames(summary_stats) <- param_names
 
     genus_est <- base::data.frame(
       param = "p1[1]",
@@ -1086,7 +1089,10 @@ Bionomics_For_Anophles_Model <- function() {
     }
 
     res_clean <- res_clean |> dplyr::filter(!grepl("unlabeled", name, ignore.case = TRUE))
-
+    res_clean <- res_clean |>
+      dplyr::mutate(
+        name = base::gsub("_complex", "", name)
+      )
     if (all) {
       compat_repo <- read_data_file("compatibility_repo_taxonomy_v2.csv", sep = ";")
 
@@ -1094,7 +1100,6 @@ Bionomics_For_Anophles_Model <- function() {
         res_clean$complex <- NA_character_
       }
 
-      res_clean <- res_clean |> dplyr::mutate(data = TRUE, source_flag = NA_integer_)
 
       for (i in seq_len(nrow(compat_repo))) {
         sp <- compat_repo$species[i]
@@ -1106,9 +1111,7 @@ Bionomics_For_Anophles_Model <- function() {
             new_row <- complex_row |> dplyr::mutate(
               name = sp,
               level = "species",
-              data = FALSE,
-              source_flag = 1L,
-              complex = cx
+              data = FALSE
             )
             res_clean <- dplyr::bind_rows(res_clean, new_row)
             next
@@ -1118,9 +1121,7 @@ Bionomics_For_Anophles_Model <- function() {
             new_row <- genus_row |> dplyr::mutate(
               name = sp,
               level = "species",
-              data = FALSE,
-              source_flag = 3L,
-              complex = cx
+              data = FALSE
             )
             res_clean <- dplyr::bind_rows(res_clean, new_row)
           } else {
@@ -1134,9 +1135,7 @@ Bionomics_For_Anophles_Model <- function() {
             new_row <- genus_row |> dplyr::mutate(
               name = cx,
               level = "complex",
-              data = FALSE,
-              source_flag = 4L,
-              complex = NA_character_
+              data = FALSE
             )
             res_clean <- dplyr::bind_rows(res_clean, new_row)
           } else {
@@ -1177,74 +1176,84 @@ Bionomics_For_Anophles_Model <- function() {
 
 
 
-  varnames <- c("parous_rate", "endophagy", "endophily", "sac_rate", "indoor_HBI","outdoor_HBI","resting_duration")
+  varnames <- c(
+    "parous_rate",
+    "endophagy",
+    "endophily",
+    "sac_rate",
+    "indoor_HBI",
+    "outdoor_HBI",
+    "resting_duration"
+  )
+
+  name_map <- list(
+    parous_rate       = c("M", "M.sd"),
+    endophagy         = c("endophagy", "endophagy.sd"),
+    endophily         = c("endophily", "endophily.sd"),
+    sac_rate          = c("A0", "A0.sd"),
+    indoor_HBI        = c("indoor_HBI", "indoor_HBI.sd"),
+    outdoor_HBI       = c("outdoor_HBI", "outdoor_HBI.sd"),
+    resting_duration  = c("tau", "tau.sd")
+  )
 
   final_df <- NULL
 
-  name_map <- list(
-    parous_rate = c("M", "M.sd"),
-    endophagy = c("endophagy", "endophagy.sd"),
-    endophily = c("endophily", "endophily.sd"),
-    sac_rate = c("A0", "A0.sd"),
-    HBI = c("Chi", "Chi.sd")
-  )
-
   for (v in varnames) {
+
     resultats <- creation_df(v)
-    print(paste0("Fitting model for ", v))
     fit <- run_stan(resultats)
 
     res <- species_complex_result_ano_model(fit)
 
     res <- res |>
-      dplyr::mutate(
-        sd = sqrt(!!rlang::sym(paste0(v, "_variance")))
-      ) |>
-      dplyr::select(name, !!rlang::sym(v), sd)
+      dplyr::mutate(sd = sqrt(.data[[paste0(v, "_variance")]])) |>
+      dplyr::select(name, !!v, sd)
 
-    new_names <- name_map[[v]]
-    colnames(res) <- c("species_name", new_names)
+    colnames(res) <- c("species_name", name_map[[v]])
 
-    if (is.null(final_df)) {
-      final_df <- res
-    } else {
-      final_df <- dplyr::left_join(final_df, res, by = "species_name")
-    }
+    final_df <- if (is.null(final_df)) res else
+      dplyr::left_join(final_df, res, by = "species_name")
   }
-
-
-  idx_jamesii <- which(final_df$species_name == "Jamesii complex")
-  if (length(idx_jamesii) > 1) {
-       idx_to_remove <- sample(idx_jamesii, 1)
-        final_df <- final_df[-idx_to_remove, ]
-        }
-
-  final_df <- final_df |>
-      dplyr::select(-Chi.sd)
 
   genus_row <- which(final_df$species_name == "GENUS")
 
   final_df[] <- lapply(final_df, function(x) {
     x[is.na(x)] <- x[genus_row]
-    return(x)
+    x
   })
+
+  final_df <- final_df |>
+    dplyr::mutate(
+      Chi = indoor_HBI * endophagy +
+        outdoor_HBI * (1 - endophagy)
+    )
+
+  final_df <- final_df |>
+    dplyr::select(
+      -indoor_HBI, -indoor_HBI.sd,
+      -outdoor_HBI, -outdoor_HBI.sd
+    )
 
   final_df$zeta.3 <- 1
   final_df$td <- 0.33
-  final_df$tau <- 3
   final_df$ts <- 10
   final_df$to <- 5
 
-  desired_order <- c("species_name", "M", "M.sd", "Chi",
-                   "A0", "A0.sd", "zeta.3", "td",
-                   "tau", "ts", "to", "endophily",
-                   "endophily.sd", "endophagy", "endophagy.sd")
-
-  final_df <- final_df[, desired_order]
+  final_df <- final_df |>
+    dplyr::select(
+      species_name,
+      M, M.sd,
+      Chi,
+      A0, A0.sd,
+      zeta.3, td,
+      tau, tau.sd,
+      ts, to,
+      endophily, endophily.sd,
+      endophagy, endophagy.sd
+    )
 
   return(final_df)
 }
-
 
 
 

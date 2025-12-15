@@ -197,20 +197,22 @@ For example, assuming the fitted model results are stored in an object called st
 
 ```{r, include=TRUE}
 summary_table <- species_complex_result(results = run_stan_result,
-        
                                        all = TRUE)
 head(summary_table)
 ```
 
-This call produces a comprehensive table including credible intervals and variance estimates for each taxonomic group, borrowing information hierarchically where data are missing, and saves the result as a CSV file. The resulting data frame can then be used for further analysis, visualization, or reporting purposes.
+In order to obtain the correct input for the AnophelsModel package, the function
+Bionomics_For_Anophles_Model() computes species-specific bionomic parameters using a hierarchical Bayesian framework. It wraps and extends the logic of species_complex_result(), applying it sequentially to the core bionomic traits estimated by the model: parous rate (M, M.sd), endophagy (endophagy, endophagy.sd), endophily (endophily, endophily.sd), sac rate (A0, A0.sd), indoor and outdoor human blood indices, and resting duration.
 
-In order to have the correct output for the Packae Anophles model, we have The function Bionomics_For_Anophles_Model(). It wraps and extends the logic of species_complex_result(), applying it sequentially to five core bionomic traits: Parous rate (M, M.sd), Endophagy (endophagy, endophagy.sd), Endophily (endophily, endophily.sd), sac rate (A0, A0.sd), human blood index (Chi)
+Human blood feeding behaviour is handled in two steps. Indoor and outdoor human blood indices are first estimated independently by the Bayesian model. The overall human blood index (Chi) is then derived a posteriori as a deterministic function of endophagy. Only the derived HBI (Chi) is retained in the final output.
 
-Internally, for each of these parameters, the fonction prepares the data using creation_df(), runs the hierarchical Bayesian model with run_stan() and extracts posterior summaries via the internal function species_complex_result(). However, you don’t need to call any of these steps individually: Bionomics_For_Anophles_Model() automates the entire workflow. The resulting table aggregates posterior means and variances into a single, tidy data frame.
+Internally, for each trait, the function prepares the data using creation_df(), fits the hierarchical Bayesian model with run_stan(), and extracts posterior summaries via the internal helper function species_complex_result_ano_model(). All steps are fully automated: users do not need to run any of these components separately. The resulting output aggregates posterior means and standard deviations across traits into a single tidy data frame.
 
-The function automatically standardizes species and complex names to ensure compatibility with the structure expected by the AnophelsModel package. This includes renaming known variants (e.g., 'Anopheles gambiae s.s.' → 'Anopheles gambiae' → 'Gambiae complex').
+The function also standardises species and species-complex names to ensure compatibility with the structure expected by AnophelsModel. This includes harmonising known taxonomic variants (e.g. "Anopheles gambiae s.s." → "Anopheles gambiae" → "Gambiae complex") and imputing missing species-level values from higher taxonomic levels when required.
 
-To use it, run:
+The resting duration parameter is estimated by the model and returned under the name tau, preserving consistency with downstream transmission models.
+
+To use the function, simply run:
 
 ```r
 bionomics_df <- Bionomics_For_Anophles_Model()

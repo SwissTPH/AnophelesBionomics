@@ -61,7 +61,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnophelesBionomics</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://SwissTPH.github.io/AnophelesBionomics">AnophelesBionomics</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -222,9 +222,9 @@ chose a path in order to save his pie. For instance, after preparing the
 data using the preprocessing pipeline, a user might call:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/obs_complex_species_pie.html">obs_complex_species_pie</a></span><span class="op">(</span><span class="va">data</span>, threshold_prop_other <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Proportion de la catégorie 'Other' : 3.08%</span></span></code></pre></div>
+<span><span class="co">#&gt; Proportion of the 'Other' category' : 0.03</span></span></code></pre></div>
 <div class="plotly html-widget html-fill-item" id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:768px;height:576px;"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"visdat":{"2a8459797a68":["function () ","plotlyVisDat"]},"cur_data":"2a8459797a68","attrs":{"2a8459797a68":{"labels":{},"values":{},"textposition":"outside","text":{},"hoverinfo":"text","texttemplate":{},"insidetextorientation":"radial","marker":{"colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":0,"l":60,"t":25,"r":10},"annotations":[{"text":"<b>Parous rate<\/b>","x":0.5,"y":0.20999999999999999,"xanchor":"center","yanchor":"bottom","showarrow":false,"font":{"size":25,"family":"Arial","color":"black"},"xref":"paper","yref":"paper"}],"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Complex: Albitarsis","Complex: Funestus","Complex: Gambiae","Complex: Nili","Other","Species: Anopheles funestus","Species: Anopheles gambiae s.s.","Species: Anopheles moucheti"],"values":[3081,5912,36492,4579,2347,2452,17556,3797],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside"],"text":["Complex: Albitarsis<br>Number of observations (sum): 3081<br>Number of surveys (rows): 1<br>Mean value: 0.47<br>SD value: NA<br>Proportion: 4%","Complex: Funestus<br>Number of observations (sum): 5912<br>Number of surveys (rows): 28<br>Mean value: 0.82<br>SD value: 0.11<br>Proportion: 7.8%","Complex: Gambiae<br>Number of observations (sum): 36492<br>Number of surveys (rows): 110<br>Mean value: 0.69<br>SD value: 0.22<br>Proportion: 47.9%","Complex: Nili<br>Number of observations (sum): 4579<br>Number of surveys (rows): 14<br>Mean value: 0.83<br>SD value: 0.13<br>Proportion: 6%","Other<br>Number of observations (sum): 2347<br>Number of surveys (rows): 9<br>Mean value: 0.45<br>SD value: NA<br>Proportion: 3.1%","Species: Anopheles funestus<br>Number of observations (sum): 2452<br>Number of surveys (rows): 26<br>Mean value: 0.72<br>SD value: 0.19<br>Proportion: 3.2%","Species: Anopheles gambiae s.s.<br>Number of observations (sum): 17556<br>Number of surveys (rows): 37<br>Mean value: 0.69<br>SD value: 0.16<br>Proportion: 23%","Species: Anopheles moucheti<br>Number of observations (sum): 3797<br>Number of surveys (rows): 3<br>Mean value: 0.71<br>SD value: 0.05<br>Proportion: 5%"],"hoverinfo":["text","text","text","text","text","text","text","text"],"texttemplate":["Complex: Albitarsis · 4%","Complex: Funestus · 8%","Complex: Gambiae · 48%","Complex: Nili · 6%","Other · 3%","Species: Anopheles funestus · 3%","Species: Anopheles gambiae s.s. · 23%","Species: Anopheles moucheti · 5%"],"insidetextorientation":"radial","marker":{"color":"rgba(31,119,180,1)","colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><p>Similarly, obs_region_pie() generates an interactive pie chart
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"visdat":{"1fd03e8118f7":["function () ","plotlyVisDat"]},"cur_data":"1fd03e8118f7","attrs":{"1fd03e8118f7":{"labels":{},"values":{},"textposition":"outside","text":{},"hoverinfo":"text","texttemplate":{},"insidetextorientation":"radial","marker":{"colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":0,"l":60,"t":25,"r":10},"annotations":[{"text":"<b>Parous rate<\/b>","x":0.5,"y":0.20999999999999999,"xanchor":"center","yanchor":"bottom","showarrow":false,"font":{"size":25,"family":"Arial","color":"black"},"xref":"paper","yref":"paper"}],"showlegend":false,"hovermode":"closest"},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Complex: Albitarsis","Complex: Funestus","Complex: Gambiae","Complex: Nili","Other","Species: Anopheles funestus","Species: Anopheles gambiae s.s. / coluzzii","Species: Anopheles moucheti"],"values":[3081,5912,36492,4579,2347,2452,17556,3797],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside"],"text":["Complex: Albitarsis<br>Number of observations (sum): 3081<br>Number of surveys (rows): 1<br>Mean value: 0.47<br>SD value: NA<br>Proportion: 0","Complex: Funestus<br>Number of observations (sum): 5912<br>Number of surveys (rows): 28<br>Mean value: 0.82<br>SD value: 0.11<br>Proportion: 0.1","Complex: Gambiae<br>Number of observations (sum): 36492<br>Number of surveys (rows): 110<br>Mean value: 0.69<br>SD value: 0.22<br>Proportion: 0.5","Complex: Nili<br>Number of observations (sum): 4579<br>Number of surveys (rows): 14<br>Mean value: 0.83<br>SD value: 0.13<br>Proportion: 0.1","Other<br>Number of observations (sum): 2347<br>Number of surveys (rows): 9<br>Mean value: 0.45<br>SD value: NA<br>Proportion: 0","Species: Anopheles funestus<br>Number of observations (sum): 2452<br>Number of surveys (rows): 26<br>Mean value: 0.72<br>SD value: 0.19<br>Proportion: 0","Species: Anopheles gambiae s.s. / coluzzii<br>Number of observations (sum): 17556<br>Number of surveys (rows): 37<br>Mean value: 0.69<br>SD value: 0.16<br>Proportion: 0.2","Species: Anopheles moucheti<br>Number of observations (sum): 3797<br>Number of surveys (rows): 3<br>Mean value: 0.71<br>SD value: 0.05<br>Proportion: 0"],"hoverinfo":["text","text","text","text","text","text","text","text"],"texttemplate":["Complex: Albitarsis : 0","Complex: Funestus : 0.1","Complex: Gambiae : 0.5","Complex: Nili : 0.1","Other : 0","Species: Anopheles funestus : 0","Species: Anopheles gambiae s.s. / coluzzii : 0.2","Species: Anopheles moucheti : 0"],"insidetextorientation":"radial","marker":{"color":"rgba(31,119,180,1)","colors":["#B956DD","#C7A5ED","#DB92E1","#C0ED49","#CCCCCC","#3D565F","#E34C39","#9CAEE6"],"line":{"color":"#FFFFFF","width":1}},"textfont":{"size":20,"family":"Arial"},"domain":{"x":[0.29999999999999999,0.69999999999999996],"y":[0.40000000000000002,0.80000000000000004]},"direction":"counterclockwise","rotation":120,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script><p>Similarly, obs_region_pie() generates an interactive pie chart
 displaying the geographic distribution of mosquito observations. It
 calculates proportional contributions from regions and labels missing
 regions as “Unspecified”.</p>
@@ -267,107 +267,88 @@ detailed inspection of species- and complex-level effects. For example,
 if the function is called as</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">run_stan_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/run_stan.html">run_stan</a></span><span class="op">(</span><span class="va">data</span>, iter <span class="op">=</span> <span class="fl">1000</span>, chains <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="co">#&gt; WARNING: Rtools is required to build R packages, but is not currently installed.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Please download and install the appropriate version of Rtools for 4.5.1 from</span></span>
-<span><span class="co">#&gt; https://cran.r-project.org/bin/windows/Rtools/.</span></span>
-<span><span class="co">#&gt; Trying to compile a simple C file</span></span>
-<span><span class="co">#&gt; Running "C:/PROGRA~1/R/R-45~1.1/bin/x64/Rcmd.exe" SHLIB foo.c</span></span>
-<span><span class="co">#&gt; using C compiler: 'gcc.exe (GCC) 14.2.0'</span></span>
-<span><span class="co">#&gt; gcc  -I"C:/PROGRA~1/R/R-45~1.1/include" -DNDEBUG   -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/Rcpp/include/"  -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/RcppEigen/include/"  -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/RcppEigen/include/unsupported"  -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/BH/include" -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/StanHeaders/include/src/"  -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/StanHeaders/include/"  -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/RcppParallel/include/" -DRCPP_PARALLEL_USE_TBB=1 -I"C:/Users/tarrau/AppData/Local/R/win-library/4.5/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include "C:/Users/tarrau/AppData/Local/R/win-library/4.5/StanHeaders/include/stan/math/prim/fun/Eigen.hpp"  -std=c++1y    -I"C:/rtools45/x86_64-w64-mingw32.static.posix/include"      -O2 -Wall -std=gnu2x  -mfpmath=sse -msse2 -mstackrealign   -c foo.c -o foo.o</span></span>
-<span><span class="co">#&gt; cc1.exe: warning: command-line option '-std=c++14' is valid for C++/ObjC++ but not for C</span></span>
-<span><span class="co">#&gt; In file included from C:/Users/tarrau/AppData/Local/R/win-library/4.5/RcppEigen/include/Eigen/Core:19,</span></span>
-<span><span class="co">#&gt;                  from C:/Users/tarrau/AppData/Local/R/win-library/4.5/RcppEigen/include/Eigen/Dense:1,</span></span>
-<span><span class="co">#&gt;                  from C:/Users/tarrau/AppData/Local/R/win-library/4.5/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,</span></span>
-<span><span class="co">#&gt;                  from &lt;command-line&gt;:</span></span>
-<span><span class="co">#&gt; C:/Users/tarrau/AppData/Local/R/win-library/4.5/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory</span></span>
-<span><span class="co">#&gt;   679 | #include &lt;cmath&gt;</span></span>
-<span><span class="co">#&gt;       |          ^~~~~~~</span></span>
-<span><span class="co">#&gt; compilation terminated.</span></span>
-<span><span class="co">#&gt; make: *** [C:/PROGRA~1/R/R-45~1.1/etc/x64/Makeconf:289: foo.o] Error 1</span></span>
-<span><span class="co">#&gt; WARNING: Rtools is required to build R packages, but is not currently installed.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Please download and install the appropriate version of Rtools for 4.5.1 from</span></span>
-<span><span class="co">#&gt; https://cran.r-project.org/bin/windows/Rtools/.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 8.2e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.82 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000184 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1.84 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 201 / 1000 [ 20%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 300 / 1000 [ 30%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 400 / 1000 [ 40%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1: Iteration: 500 / 1000 [ 50%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 1: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.197 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                3.972 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                6.169 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 3.918 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.777 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                4.695 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2: Gradient evaluation took 3.3e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.33 seconds.</span></span>
+<span><span class="co">#&gt; Chain 2: Gradient evaluation took 3.7e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.37 seconds.</span></span>
 <span><span class="co">#&gt; Chain 2: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; Chain 2: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 2: Iteration: 201 / 1000 [ 20%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2: Iteration: 300 / 1000 [ 30%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2: Iteration: 400 / 1000 [ 40%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2: Iteration: 500 / 1000 [ 50%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 2: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 2: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 2: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
-<span><span class="co">#&gt; Chain 2:  Elapsed Time: 1.442 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 2:                1.265 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 2:                2.707 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 2:  Elapsed Time: 2.748 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 2:                1.523 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 2:                4.271 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 2: </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3: Gradient evaluation took 4.4e-05 seconds</span></span>
-<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.44 seconds.</span></span>
+<span><span class="co">#&gt; Chain 3: Gradient evaluation took 3.5e-05 seconds</span></span>
+<span><span class="co">#&gt; Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.35 seconds.</span></span>
 <span><span class="co">#&gt; Chain 3: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
 <span><span class="co">#&gt; Chain 3: Iteration:   1 / 1000 [  0%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 100 / 1000 [ 10%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 200 / 1000 [ 20%]  (Warmup)</span></span>
-<span><span class="co">#&gt; Chain 3: Iteration: 201 / 1000 [ 20%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3: Iteration: 300 / 1000 [ 30%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3: Iteration: 400 / 1000 [ 40%]  (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3: Iteration: 500 / 1000 [ 50%]  (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3: Iteration: 300 / 1000 [ 30%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 3: Iteration: 400 / 1000 [ 40%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 3: Iteration: 500 / 1000 [ 50%]  (Warmup)</span></span>
+<span><span class="co">#&gt; Chain 3: Iteration: 501 / 1000 [ 50%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 600 / 1000 [ 60%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 700 / 1000 [ 70%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 800 / 1000 [ 80%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 900 / 1000 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: Iteration: 1000 / 1000 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 3: </span></span>
-<span><span class="co">#&gt; Chain 3:  Elapsed Time: 1.484 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 3:                2.12 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 3:                3.604 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 3:  Elapsed Time: 2.292 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 3:                0.795 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 3:                3.087 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 3:</span></span>
-<span><span class="co">#&gt; Warning: There were 5 divergent transitions after warmup. See</span></span>
+<span><span class="co">#&gt; Warning: There were 7 divergent transitions after warmup. See</span></span>
 <span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup</span></span>
 <span><span class="co">#&gt; to find out why this is a problem and how to eliminate them.</span></span>
-<span><span class="co">#&gt; Warning: Examine the pairs() plot to diagnose sampling problems</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: Examine the pairs() plot to diagnose sampling problems</span></span>
+<span><span class="co">#&gt; Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
+<span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
+<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
 <p>Other returned elements include a mapping of species to species
 complexes, user-friendly and original variable names, and details about
 the sampling parameters used. These additional outputs are primarily
@@ -447,48 +428,46 @@ object called stan_result, the posterior summaries can be extracted
 with:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/species_complex_result.html">species_complex_result</a></span><span class="op">(</span>results <span class="op">=</span> <span class="va">run_stan_result</span>,</span>
-<span>        </span>
 <span>                                       all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">summary_table</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                   name   level              estimate_ci     variance  ci_lower</span></span>
-<span><span class="co">#&gt; 1            Anopheles   genus 55.52% ± 36.06% (CI 95%) 3.013295e-02 0.1945526</span></span>
-<span><span class="co">#&gt; 2             Funestus complex 71.03% ± 17.86% (CI 95%) 5.024724e-03 0.5317520</span></span>
-<span><span class="co">#&gt; 3              Gambiae complex 58.89% ± 11.84% (CI 95%) 3.201060e-03 0.4705926</span></span>
-<span><span class="co">#&gt; 4 Anopheles arabiensis species   48.99% ± 7.8% (CI 95%) 1.611226e-03 0.4131630</span></span>
-<span><span class="co">#&gt; 5   Anopheles darlingi species  46.65% ± 3.23% (CI 95%) 2.685148e-04 0.4342010</span></span>
-<span><span class="co">#&gt; 6   Anopheles funestus species  75.66% ± 1.76% (CI 95%) 7.674926e-05 0.7390068</span></span>
-<span><span class="co">#&gt;    ci_upper                    complex data source_flag</span></span>
-<span><span class="co">#&gt; 1 0.8935260                       &lt;NA&gt; TRUE          NA</span></span>
-<span><span class="co">#&gt; 2 0.8129574                       &lt;NA&gt; TRUE          NA</span></span>
-<span><span class="co">#&gt; 3 0.6928048                       &lt;NA&gt; TRUE          NA</span></span>
-<span><span class="co">#&gt; 4 0.5679127                    Gambiae TRUE          NA</span></span>
-<span><span class="co">#&gt; 5 0.4987999 Anopheles darlingi_complex TRUE          NA</span></span>
-<span><span class="co">#&gt; 6 0.7731687                   Funestus TRUE          NA</span></span></code></pre></div>
-<p>This call produces a comprehensive table including credible intervals
-and variance estimates for each taxonomic group, borrowing information
-hierarchically where data are missing, and saves the result as a CSV
-file. The resulting data frame can then be used for further analysis,
-visualization, or reporting purposes.</p>
-<p>In order to have the correct output for the Packae Anophles model, we
-have The function Bionomics_For_Anophles_Model(). It wraps and extends
-the logic of species_complex_result(), applying it sequentially to five
-core bionomic traits: Parous rate (M, M.sd), Endophagy (endophagy,
-endophagy.sd), Endophily (endophily, endophily.sd), sac rate (A0,
-A0.sd), human blood index (Chi)</p>
-<p>Internally, for each of these parameters, the fonction prepares the
-data using creation_df(), runs the hierarchical Bayesian model with
-run_stan() and extracts posterior summaries via the internal function
-species_complex_result(). However, you don’t need to call any of these
-steps individually: Bionomics_For_Anophles_Model() automates the entire
-workflow. The resulting table aggregates posterior means and variances
-into a single, tidy data frame.</p>
-<p>The function automatically standardizes species and complex names to
-ensure compatibility with the structure expected by the AnophelsModel
-package. This includes renaming known variants (e.g., ‘Anopheles gambiae
-s.s.’ → ‘Anopheles gambiae’ → ‘Gambiae complex’).</p>
-<p>To use it, run:</p>
+<span><span class="co">#&gt;                 name   level  estimate    variance  ci_lower  ci_upper data</span></span>
+<span><span class="co">#&gt; 1          Anopheles   genus 0.5554246 0.024652729 0.2279280 0.8460378 TRUE</span></span>
+<span><span class="co">#&gt; 2         Albitarsis complex 0.5043656 0.006672325 0.3458019 0.6703306 TRUE</span></span>
+<span><span class="co">#&gt; 3 Anopheles darlingi complex 0.4996886 0.007277729 0.3409422 0.6754774 TRUE</span></span>
+<span><span class="co">#&gt; 4 Anopheles moucheti complex 0.6727180 0.005600503 0.5076364 0.7952426 TRUE</span></span>
+<span><span class="co">#&gt; 5           Funestus complex 0.7161711 0.003448076 0.5719385 0.8070979 TRUE</span></span>
+<span><span class="co">#&gt; 6            Gambiae complex 0.5924326 0.002889627 0.4695009 0.6911539 TRUE</span></span></code></pre></div>
+<p>In order to obtain the correct input for the AnophelsModel package,
+the function Bionomics_For_Anophles_Model() computes species-specific
+bionomic parameters using a hierarchical Bayesian framework. It wraps
+and extends the logic of species_complex_result(), applying it
+sequentially to the core bionomic traits estimated by the model: parous
+rate (M, M.sd), endophagy (endophagy, endophagy.sd), endophily
+(endophily, endophily.sd), sac rate (A0, A0.sd), indoor and outdoor
+human blood indices, and resting duration.</p>
+<p>Human blood feeding behaviour is handled in two steps. Indoor and
+outdoor human blood indices are first estimated independently by the
+Bayesian model. The overall human blood index (Chi) is then derived a
+posteriori as a deterministic function of endophagy. Only the derived
+HBI (Chi) is retained in the final output.</p>
+<p>Internally, for each trait, the function prepares the data using
+creation_df(), fits the hierarchical Bayesian model with run_stan(), and
+extracts posterior summaries via the internal helper function
+species_complex_result_ano_model(). All steps are fully automated: users
+do not need to run any of these components separately. The resulting
+output aggregates posterior means and standard deviations across traits
+into a single tidy data frame.</p>
+<p>The function also standardises species and species-complex names to
+ensure compatibility with the structure expected by AnophelsModel. This
+includes harmonising known taxonomic variants (e.g. “Anopheles gambiae
+s.s.” → “Anopheles gambiae” → “Gambiae complex”) and imputing missing
+species-level values from higher taxonomic levels when required.</p>
+<p>The resting duration parameter is estimated by the model and returned
+under the name tau, preserving consistency with downstream transmission
+models.</p>
+<p>To use the function, simply run:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bionomics_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Bionomics_For_Anophles_Model.html">Bionomics_For_Anophles_Model</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">bionomics_df</span> <span class="op">&lt;-</span> <span class="fu">Bionomics_For_Anophles_Model</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bionomics_df</span><span class="op">)</span></span></code></pre></div>
 <p>The output format is specifically designed to plug directly into
 AnophelsModel.</p>

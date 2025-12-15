@@ -2,13 +2,12 @@
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/404.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/articles/AnophelesBionomics.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/articles/index.html</loc></url>
-<url><loc>https://SwissTPH.github.io/AnophelesBionomics/articles/Introduction_to_AnophelesBionomics.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/authors.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/index.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/adding_data_extern.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/augment_withProportion_modif.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/augment_with_taxonomy.html</loc></url>
-<url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/Bionomics_For_Anophles_Model.html</loc></url>
+<url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/Bionomics_For_AnopholesModel.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/create_datareq.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/create_repo.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/creation_df.html</loc></url>
@@ -20,7 +19,7 @@
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/obs_complex_species_pie.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/obs_region_pie.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/plot_density.html</loc></url>
-<url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/plot_lolipop.html</loc></url>
+<url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/plot_lollipop.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/prepare_data_density.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/prepare_stan_data.html</loc></url>
 <url><loc>https://SwissTPH.github.io/AnophelesBionomics/reference/read_data_file.html</loc></url>
