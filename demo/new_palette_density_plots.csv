@@ -1,0 +1,75 @@
+name,pal
+Anopheles albimanus,#52AAAA
+Anopheles aquasalis,#E5D9DA
+Anopheles darlingi,#7FCFBA
+Anopheles freeborni,#CCF1D4
+Anopheles kochi,#E68655
+Anopheles moucheti,#9CAEE6
+Anopheles nivipes,#6AEB42
+Anopheles stephensi,#DDB1AE
+Anopheles tessellatus,#ADD2D2
+Anopheles vagus,#C4605E
+Anopheles albitarsis A,#54ACD9
+Anopheles albitarsis B,#EAC93C
+Anopheles albitarsis E,#EFEF9C
+Anopheles marajoara,#C1F08A
+Anopheles annularis A,#B7E9B0
+Anopheles philippinensis,#54C088
+Anopheles barbirostris,#EDE9CC
+Anopheles baimaii,#9BA38F
+Anopheles cracens,#BFD6A0
+Anopheles dirus,#EB77AF
+Anopheles aconitus,#99F2DC
+Anopheles culicifacies A,#E79B8C
+Anopheles culicifacies B,#E54A7B
+Anopheles culicifacies C,#EB45AC
+Anopheles culicifacies D,#DF7FE3
+Anopheles culicifacies E,#6A41A5
+Anopheles flavirostris,#BBD1B9
+Anopheles fluviatilis,#B23C91
+Anopheles fluviatilis S,#B396BD
+Anopheles fluviatilis T,#D4C3EA
+Anopheles funestus,#3D565F
+Anopheles harrisoni,#8C72EC
+Anopheles minimus,#55F4D5
+Anopheles arabiensis,#885879
+Anopheles gambiae s.s.,#E34C39
+Anopheles melas,#EAF2EC
+Anopheles merus,#D8CA6D
+Anopheles anthropophagus,#ECB787
+Anopheles sinensis,#98756F
+Anopheles jamesii,#E85CD9
+Anopheles pseudojamesi,#85E28F
+Anopheles splendidus,#89B17A
+Anopheles balabacensis,#EEACE1
+Anopheles latens,#4EA1EE
+Anopheles leucosphyrus,#EDF1BD
+Anopheles maculatus,#53D5E6
+Anopheles carnevalei,#959CA8
+Anopheles nili,#61E9E5
+Anopheles ovengensis,#6985DC
+Anopheles nuneztovari B/C,#946EB5
+Anopheles farauti,#98EFB9
+Anopheles koliensis,#56EBA6
+Anopheles punctulatus,#7BE360
+Anopheles quadrimaculatus,#783CDF
+Anopheles subpictus B,#637DA3
+Anopheles epiroticus,#CFD7E9
+Anopheles sundaicus,#E1CA97
+Albitarsis,#B956DD
+Annularis,#C7E494
+Barbirostris,#3E8556
+Dirus,#A4C4E6
+Funestus,#C7A5ED
+Gambiae,#DB92E1
+Hyrcanus,#D8E464
+Jamesii,#DE9C3F
+Leucosphyrus,#81AB45
+Maculatus,#E5CDB6
+Nili,#C0ED49
+Nuneztovari,#E5C3D6
+Pseudopunctipennis,#D635E4
+Punctulatus,#9C875B
+Quadrimaculatus,#E996AD
+Subpictus,#8DD6EF
+Sundaicus,#BCEFF1
