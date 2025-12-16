@@ -19,7 +19,7 @@ library(sensitivity)
 
 
 load(system.file("demo", "densite_all_param.RData", package = "AnophelesBionomics"))
-load(system.file("demo", "df_wide_assenga_IG2.RData", package = "AnophelesBionomics"))
+load(system.file("demo", "df_wide_IG2.RData", package = "AnophelesBionomics"))
 
 get_activity_noRhythms <- function(){
   activity_noRhythms = def_activity_patterns()
@@ -658,7 +658,7 @@ process_densite_data <- function(densite_all_param) {
 
 densite_all_param_clean <- process_densite_data(densite_all_param)
 
-vc_simul_IG2 <- run_vcc_simulation(2, densite_all_param_clean, df_wide_assenga_IG2, all_param_l_kappa, activity_pattern_all_species)
+vc_simul_IG2 <- run_vcc_simulation(2, densite_all_param_clean, df_wide_IG2, all_param_l_kappa, activity_pattern_all_species)
 #load(system.file("demo", "vc_simul_IG2_v2.RData", package = "AnophelesBionomics"))
 
 plot_vcc_results <- function(sim_results,
@@ -894,7 +894,7 @@ prcc_vcc_genus <- function(n, df_wide_assenga, densite_all_param, genus_name = "
   ))
 }
 
-result_GENUS_IG2 <- prcc_vcc_genus(n = 50, df_wide_assenga = df_wide_assenga_IG2, densite_all_param = densite_all_param, genus_name = "GENUS")
+result_GENUS_IG2 <- prcc_vcc_genus(n = 50, df_wide_assenga = df_wide_IG2, densite_all_param = densite_all_param, genus_name = "GENUS")
 #load(system.file("demo", "result_GENUS_IG2_v2.RData", package = "AnophelesBionomics"))
 
 plot_prcc_GENUS <- function(result_GENUS) {
