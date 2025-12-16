@@ -155,7 +155,7 @@ get_activity_pattern_all_species <- function(){
   return(dd)
 
 }
-dd <- get_activity_pattern_all_species()
+activity_pattern_all_species <- get_activity_pattern_all_species()
 
 get_L_and_kappa <- function(){
 
@@ -513,16 +513,16 @@ split_complex_mean <- function(my_activity_patterns) {
 #### Reduction in VC ####
 #########################
 
-run_vcc_simulation <- function(n, densite_all_param, df_wide_assenga, all_param_l_kappa, DD) {
+run_vcc_simulation <- function(n, densite_all_param, df_wide_assenga, all_param_l_kappa, activity_pat_all_species) {
   species_list <- unique(densite_all_param$name)
   results <- data.frame(name = species_list)
   error_log <- data.frame(species = character(), n_errors = integer(), stringsAsFactors = FALSE)
 
   mean_global <- list(
-    HBI = Reduce("+", lapply(DD, function(x) x$HBI)) / length(DD),
-    HBO = Reduce("+", lapply(DD, function(x) x$HBO)) / length(DD),
-    humans_indoors = Reduce("+", lapply(DD, function(x) x$humans_indoors)) / length(DD),
-    humans_in_bed  = Reduce("+", lapply(DD, function(x) x$humans_in_bed)) / length(DD)
+    HBI = Reduce("+", lapply(activity_pat_all_species, function(x) x$HBI)) / length(activity_pat_all_species),
+    HBO = Reduce("+", lapply(activity_pat_all_species, function(x) x$HBO)) / length(activity_pat_all_species),
+    humans_indoors = Reduce("+", lapply(activity_pat_all_species, function(x) x$humans_indoors)) / length(activity_pat_all_species),
+    humans_in_bed  = Reduce("+", lapply(activity_pat_all_species, function(x) x$humans_in_bed)) / length(activity_pat_all_species)
   )
 
   for (species_name in species_list) {
@@ -531,7 +531,7 @@ run_vcc_simulation <- function(n, densite_all_param, df_wide_assenga, all_param_
     error_count <- 0
     print(species_name)
 
-    mean_act_pat <- if (species_name %in% names(DD)) DD[[species_name]] else {
+    mean_act_pat <- if (species_name %in% names(activity_pat_all_species)) activity_pat_all_species[[species_name]] else {
       warning(paste("Profil non trouvé pour", species_name, "→ utilisation du profil moyen global"))
       mean_global
     }
@@ -658,7 +658,7 @@ process_densite_data <- function(densite_all_param) {
 
 densite_all_param_clean <- process_densite_data(densite_all_param)
 
-vc_simul_IG2 <- run_vcc_simulation(2, densite_all_param_clean, df_wide_assenga_IG2, all_param_l_kappa, dd)
+vc_simul_IG2 <- run_vcc_simulation(2, densite_all_param_clean, df_wide_assenga_IG2, all_param_l_kappa, activity_pattern_all_species)
 #load(system.file("demo", "vc_simul_IG2_v2.RData", package = "AnophelesBionomics"))
 
 plot_vcc_results <- function(sim_results,
