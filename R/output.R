@@ -640,8 +640,10 @@ plot_density <- function(stan_results,
   p_list <- base::lapply(base::seq_along(split_list), function(i) {
     sub_df <- base::droplevels(split_list[[i]])
 
+    #taxa_names <- paste0("*",base::unique(sub_df$name[sub_df$name != "GENUS"]),"*")
     taxa_names <- base::unique(sub_df$name[sub_df$name != "GENUS"])
     taxa_colors <- colors_map$pal[base::match(taxa_names, colors_map$name)]
+    taxa_names_italics <- ifelse(stringr::str_detect(taxa_names,"unlabeled"),taxa_names,paste0("*",taxa_names,"*"))
 
     ggplot2::ggplot(sub_df) +
       ggplot2::geom_density(
@@ -656,7 +658,7 @@ plot_density <- function(stan_results,
       ggplot2::scale_colour_identity(
         name = "",
         breaks = taxa_colors,
-        labels = taxa_names,
+        labels = taxa_names_italics,
         guide = "legend"
       ) +
       ggplot2::scale_linetype_identity(
@@ -667,10 +669,11 @@ plot_density <- function(stan_results,
       ) +
       ggplot2::theme_bw() +
       ggplot2::theme(
+        legend.text = ggtext::element_markdown(size = 30),
         axis.title.x = ggplot2::element_blank(),
         axis.title.y = ggplot2::element_blank(),
         legend.title = ggplot2::element_blank(),
-        legend.text = ggplot2::element_text(size = 30),
+        #legend.text = ggplot2::element_text(size = 30),
         text = ggplot2::element_text(size = 25)
       ) +
       ggplot2::guides(
