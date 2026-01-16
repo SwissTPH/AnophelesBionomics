@@ -1378,7 +1378,11 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
   legend_data <- dplyr::bind_rows(all_data_clean_list)
   legend_df <- legend_data |>
     dplyr::distinct(label, pal) |>
-    dplyr::arrange(label)
+    dplyr::arrange(label) |>
+    dplyr::mutate(label0=label,
+                  label=ifelse(label0=="Other", "Other",
+                               paste0(gsub("Species: ", "Species: *",
+                                           gsub("Complex: ", "Complex: *", label)), "*")))
 
   legend_plot <- ggplot2::ggplot(legend_df, ggplot2::aes(x = 1, y = label, fill = label)) +
     ggplot2::geom_col() +
@@ -1387,7 +1391,7 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
     ggplot2::theme(
       legend.position = "right",
       legend.title = ggplot2::element_blank(),
-      legend.text = ggplot2::element_text(size = 50),
+      legend.text = ggtext::element_markdown(size = 50),
       legend.key.size = ggplot2::unit(3, "lines"),
       legend.spacing.y = ggplot2::unit(30, "lines")
     )
