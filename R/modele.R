@@ -185,6 +185,7 @@ run_stan <- function(data = data,
 
   list(
     fit = fit,
+    stan_file=fit_rstan,
     species_complex = species_complex,
     nice_varname = nice_varname,
     varname = varname,

@@ -1,6 +1,7 @@
 library(AnophelesBionomics)
 library(dplyr)
 library(ggplot2)
+path_output  = "C:/Users/chamcl/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Bionomics_estimation_v5/Figures/"
 
 
 obs_complex_species_table <- function(data) {
@@ -45,9 +46,8 @@ obs_complex_species_table <- function(data) {
 }
 #tab <- obs_complex_species_table(data)
 
-stan_species_complex_table <- function(results) {
-  stan_fit <- results$fit
-  SP <- results$species_complex
+stan_species_complex_table <- function(results, SP) {
+  stan_fit <- extract_HPD_mcmc(results)
 
   posterior_samples <- do.call(rbind, stan_fit)
 
@@ -162,7 +162,7 @@ merge_empirical_bayesian <- function(empirical_df, bayesian_df) {
 }
 #tab3 <- merge_empirical_bayesian(tab,tab2)
 
-compare_empirical_bayesian_all <- function(params) {
+compare_empirical_bayesian_all <- function(params, path) {
   results_list <- list()
 
   for (param in params) {
@@ -177,9 +177,9 @@ compare_empirical_bayesian_all <- function(params) {
 
     empirical_df <- obs_complex_species_table(data)
 
-    stan_fit <- run_stan(data)
+    stan_fit <- readRDS(file.path(path, paste0(param,"_stanoutput.rds")))
 
-    bayesian_df <- stan_species_complex_table(stan_fit)
+    bayesian_df <- stan_species_complex_table(results = stan_fit, SP=data$species_complex)
 
     merged_df <- merge_empirical_bayesian(empirical_df, bayesian_df)
 
@@ -199,10 +199,7 @@ compare_empirical_bayesian_all <- function(params) {
   final_df <- dplyr::bind_rows(results_list)
   return(final_df)
 }
-params <- c("parous_rate","indoor_HBI" ,"outdoor_HBI","sac_rate","endophagy", "endophily")
-final_results <- compare_empirical_bayesian_all(params)
 
-#load(system.file("demo", "final_result.RData", package = "AnophelesBionomics"))
 
 plot_complex_comparison <- function(final_results) {
   complexes_multi <- final_results %>%
@@ -254,7 +251,7 @@ plot_complex_comparison <- function(final_results) {
         ) +
         labs(
           title = paste0("Complex: ", unique(df$complex)),
-          x = NULL, y = "Mean value"
+          x = NULL, y = "Mean value", col=""
         ) +
         theme_minimal() +
         theme(
@@ -268,5 +265,10 @@ plot_complex_comparison <- function(final_results) {
   return(plots)
 }
 
+params <- c("parous_rate","indoor_HBI" ,"outdoor_HBI","sac_rate","endophagy", "endophily", "resting_duration")
+final_results <- compare_empirical_bayesian_all(params, path=path_output)
+
+
 plots <- plot_complex_comparison(final_results)
-for (p in plots) print(p)
+ggsave(plots[[2]], file=file.path(path_output, "shrinkage_gambiae.png"), width = 9, height=5)
+ggsave(plots[[1]], file=file.path(path_output, "shrinkage_funestus.png"), width = 9, height=5)
