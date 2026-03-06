@@ -119,6 +119,7 @@ extract_HPD_mcmc <- function(object, prob = 0.99) {
 #' @return A named list containing:
 #' \describe{
 #'   \item{`fit`}{An `rstan` `stanfit` object with the fitted model and posterior samples.}
+#'   \item{`stan_file`}{The full stan output file}
 #'   \item{`species_complex`}{Data frame or vector linking species to complexes used in the model.}
 #'   \item{`nice_varname`}{User-friendly variable name for labeling and plotting.}
 #'   \item{`varname`}{The original variable name input.}

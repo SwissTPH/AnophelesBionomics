@@ -470,14 +470,12 @@ run_vcc_simulation <- function(n, densite_all_param, df_wide_IG2, all_param_l_ka
     }
 
     for (i in seq_len(n)) {
-      indoor_HBI   <- sample(sp_data$value[sp_data$param == "indoor_HBI"], 1)
-      outdoor_HBI  <- sample(sp_data$value[sp_data$param == "outdoor_HBI"], 1)
+      HBI   <- sample(sp_data$value[sp_data$param == "indoor_HBI"], 1)
       endophagy    <- sample(sp_data$value[sp_data$param == "endophagy"], 1)
       sac_rate     <- sample(sp_data$value[sp_data$param == "sac_rate"], 1)
       parous_rate  <- sample(sp_data$value[sp_data$param == "parous_rate"], 1)
       resting_duration  <- sample(sp_data$value[sp_data$param == "resting_duration"], 1)
 
-      HBI <- indoor_HBI * endophagy + outdoor_HBI * (1 - endophagy)
       df_wide <- df_wide_IG2
       aa <- get_in_out_exp_modif(mean_act_pat, endophagy)
       eps <- aa$Exposure_Indoor_whileinbed

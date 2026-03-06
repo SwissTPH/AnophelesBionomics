@@ -42,8 +42,8 @@ all_param_l_kappa <- data.frame("L"=2.2, "kappa"=1.3)
 vc_simul_IG2 <- run_vcc_simulation(n=200, densite_all_param=densite_all_param, df_wide_IG2=df_wide_IG2, all_param_l_kappa=all_param_l_kappa, activity_pat_all_species=activity_pattern_all_species)
 vc_simul_IG2$results$name=ifelse(vc_simul_IG2$results$name=="Anopheles","GENUS", vc_simul_IG2$results$name)
 
-saveRDS(vc_simul_IG2, file.path(path_output, "vc_simul_IG2.rds"))
-#load(file.path("demo", "vc_simul_IG2_v2.RData"))
+#saveRDS(vc_simul_IG2, file.path( "demo/vc_simul_IG2.rds"))
+vc_simul_IG2=readRDS(file.path("demo", "vc_simul_IG2.rds"))
 
 plot_vcc_results <- function(sim_results,
                              species_filter = NULL,
@@ -215,7 +215,6 @@ prcc_vcc_genus <- function(n, df_wide_IG2, densite_all_param, genus_name = "GENU
 
   params_df <- data.frame(
     indoor_HBI = numeric(n),
-    outdoor_HBI = numeric(n),
     endophagy = numeric(n),
     sac_rate = numeric(n),
     parous_rate = numeric(n),
@@ -223,16 +222,14 @@ prcc_vcc_genus <- function(n, df_wide_IG2, densite_all_param, genus_name = "GENU
   )
 
   for (i in 1:n) {
-    indoor_HBI   <- sample(sp_data$value[sp_data$param == "indoor_HBI"], 1)
-    outdoor_HBI  <- sample(sp_data$value[sp_data$param == "outdoor_HBI"], 1)
+    HBI   <- sample(sp_data$value[sp_data$param == "indoor_HBI"], 1)
     endophagy    <- sample(sp_data$value[sp_data$param == "endophagy"], 1)
     sac_rate     <- sample(sp_data$value[sp_data$param == "sac_rate"], 1)
     parous_rate  <- sample(sp_data$value[sp_data$param == "parous_rate"], 1)
     resting_duration  <- sample(sp_data$value[sp_data$param == "resting_duration"], 1)
 
 
-    params_df[i, ] <- c(indoor_HBI, outdoor_HBI, endophagy, sac_rate, parous_rate,resting_duration)
-    HBI <- indoor_HBI * endophagy + outdoor_HBI * (1 - endophagy)
+    params_df[i, ] <- c(HBI, endophagy, sac_rate, parous_rate,resting_duration)
 
     df_wide <- df_wide_IG2
 
@@ -282,7 +279,7 @@ result_GENUS_IG2 <- prcc_vcc_genus(n = 20000, df_wide_IG2 = df_wide_IG2, densite
 saveRDS(result_GENUS_IG2, file.path(path_output, "result_GENUS_IG2.rds"))
 
 
-#load(file.path("demo", "result_GENUS_IG2.RData"))
+#result_GENUS_IG2=readRDS(file.path("demo", "result_GENUS_IG2.rds"))
 
 plot_prcc_GENUS <- function(result_GENUS) {
   print(result_GENUS$PRCC$PRCC)
@@ -296,12 +293,12 @@ plot_prcc_GENUS <- function(result_GENUS) {
       Parameters = recode(Parameters,
                           endophagy = "Endophagy",
                           indoor_HBI = "Indoor HBI",
-                          outdoor_HBI = "Outdoor HBI",
+                          #outdoor_HBI = "Outdoor HBI",
                           parous_rate = "Parous rate",
                           sac_rate = "Sac rate",
                           resting_duration = "Resting Duration"),
       Parameters = factor(Parameters,
-                          levels = c("Endophagy", "Indoor HBI", "Outdoor HBI", "Sac rate", "Parous rate", "Resting Duration"))
+                          levels = c("Endophagy", "Indoor HBI", "Sac rate", "Parous rate", "Resting Duration"))
     )
 
   obj_name <- deparse(substitute(result_GENUS))

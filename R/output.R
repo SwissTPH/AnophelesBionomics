@@ -1289,6 +1289,16 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
   varnames <- c("endophagy", "endophily",
                 "indoor_HBI", "outdoor_HBI", "parous_rate", "sac_rate", "resting_duration")
 
+  ordered_names=c("Albitarsis", "Annularis", "Barbirostris",
+                  "Dirus", "Funestus","Anopheles funestus",
+                  "Gambiae","Anopheles arabiensis", "Anopheles gambiae s.s. / coluzzii",
+                  "Anopheles jamesii", "Maculatus", "Nili",
+                  "Punctulatus", "Anopheles farauti","Subpictus",
+                  "Anopheles albimanus", "Anopheles darlingi",
+                  "Anopheles kochi","Anopheles moucheti",
+                  "Other")
+
+
   colors_map <- read_data_file(file = "new_palette_density_plots.csv")
 
   all_data_clean_list <- list()
@@ -1310,9 +1320,7 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
         .groups = "drop"
       ) |>
       dplyr::mutate(
-        label = ifelse(is_complex,
-                       paste0("Complex: ", species_clean),
-                       paste0("Species: ", species_clean)),
+        label =species_clean,
         prop = total_obs / sum(total_obs)
       ) |>
       dplyr::left_join(colors_map, by = c("species_clean" = "name"))
@@ -1347,28 +1355,38 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
     data_clean <- data_clean |>
       dplyr::arrange(prop) |>
       dplyr::mutate(
-        label_pct = paste0(label, " : ", round(prop * 100), "%"),
+        label_pct = paste0("<i>",label, "</i><br>", round(prop * 100), "%"),
+        #label_pct = paste0(gsub("Anopheles ","Anopheles\n", label), " :\n", round(prop * 100), "%"),
         label = factor(label, levels = label)
       )
 
+    data_clean$label_pct=gsub("Anopheles ", "Anopheles<br>",data_clean$label_pct )
     all_data_clean_list[[varname]] <<- data_clean
 
     ggplot2::ggplot(data_clean, ggplot2::aes(x = "", y = prop, fill = label)) +
       ggplot2::geom_col(width = 1, color = "white") +
       ggplot2::coord_polar(theta = "y") +
       ggplot2::geom_text(
-        ggplot2::aes(label = ifelse(prop > 0.03, paste0(round(prop * 100), "%"), "")),
+        ggplot2::aes(label = ifelse(prop > 0.05 & prop<0.2, paste0(round(prop * 100), "%"), "")),
         position = ggplot2::position_stack(vjust = 0.5),
         color = "black",
-        size = 17
+        size = 14
       ) +
+      ggtext::geom_richtext(
+        ggplot2::aes(label = ifelse(prop > 0.20, label_pct,NA)),
+        position = ggplot2::position_stack(vjust = 0.5),
+        color = "black",
+        size = 14,
+        label.color = NA
+      )+
       ggplot2::scale_fill_manual(values = setNames(data_clean$pal, data_clean$label)) +
       ggplot2::theme_void(base_size = 25) +
       ggplot2::theme(
         legend.position = "none",
         plot.margin = ggplot2::margin(t = 5, b = 10),
         plot.title = ggplot2::element_blank(),
-        plot.caption = ggplot2::element_text(hjust = 0.5, size = 50, face = "bold")
+        plot.caption = ggplot2::element_text(hjust = 0.5, size = 50, face = "bold"),
+        plot.background = element_rect(fill = "white", color = NA)
       ) +
       ggplot2::labs(caption = nice_varname)
   }
@@ -1381,9 +1399,10 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
     dplyr::arrange(label) |>
     dplyr::mutate(label0=label,
                   label=ifelse(label0=="Other", "Other",
-                               paste0(gsub("Species: ", "Species: *",
-                                           gsub("Complex: ", "Complex: *", label)), "*")))
+                               paste0("*", label, "*")))
 
+  legend_df$label=factor(legend_df$label,
+                         levels=ifelse(ordered_names=="Other", "Other", paste0("*", ordered_names, "*")))
   legend_plot <- ggplot2::ggplot(legend_df, ggplot2::aes(x = 1, y = label, fill = label)) +
     ggplot2::geom_col() +
     ggplot2::scale_fill_manual(values = setNames(legend_df$pal, legend_df$label)) +
@@ -1393,7 +1412,8 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
       legend.title = ggplot2::element_blank(),
       legend.text = ggtext::element_markdown(size = 50),
       legend.key.size = ggplot2::unit(3, "lines"),
-      legend.spacing.y = ggplot2::unit(30, "lines")
+      legend.spacing.y = ggplot2::unit(30, "lines"),
+      plot.background = element_rect(fill = "white", color = NA)
     )
 
   legend <- cowplot::get_legend(legend_plot)

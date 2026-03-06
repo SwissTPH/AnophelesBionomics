@@ -4,7 +4,7 @@ library(ggplot2)
 
 path_plot  = "C:/Users/chamcl/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Bionomics_estimation_v5/Figures/"
 
-multi_species_pie(seuil_prop_autres = 0.05,plot_dir = path_plot)
+multi_species_pie(seuil_prop_autres = 0.05, plot_dir = path_plot)
 
 varnames <- c("endophagy", "endophily", "indoor_HBI", "outdoor_HBI",
               "parous_rate", "sac_rate", "resting_duration")
