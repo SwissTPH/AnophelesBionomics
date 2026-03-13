@@ -219,18 +219,11 @@ bionomics_df <- Bionomics_For_Anophles_Model()
 head(bionomics_df)
 ```
 
-The output format is specifically designed to plug directly into AnophelsModel.
+The output format is specifically designed to plug directly into AnophelesModel.
 
 
 <br><br><br>
 
-
-## Dashboard
-
-
-TO DO 
-
-<br><br><br>
 
 # Appendix
 

@@ -14,7 +14,7 @@ for (varname in varnames) {
   run_stan_result <- run_stan(data, iter = 3000)
   species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
   saveRDS(run_stan_result$stan_file, file = file.path(path_excel, paste0(varname,"_stanoutput.rds") ))
-  sum(sapply(get_sampler_params(run_stan_result$stan_file, inc_warmup = FALSE), function(x) sum(x[, "divergent__"])))
+  #sum(sapply(rstan::get_sampler_params(run_stan_result$stan_file, inc_warmup = FALSE), function(x) sum(x[, "divergent__"])))
   complex_names_temp <- switch(
     varname,
     "endophagy"     = c("Gambiae", "Funestus", "Anopheles albimanus_complex"),

@@ -48,27 +48,27 @@ vc_simul_IG2=readRDS(file.path("demo", "vc_simul_IG2.rds"))
 plot_vcc_results <- function(sim_results,
                              species_filter = NULL,
                              conf_level = 0.95,
-                             palette_path = "demo/new_palette_density_plots.csv",
-                             color = NULL,
-                             sim_name = NULL) {
+                             #palette_path = "demo/new_palette_density_plots.csv",
+                             color = NULL) {
 
 
-  if (is.null(sim_name)) {
-    obj_name <- deparse(substitute(sim_results))
-    print(obj_name)
-    if (grepl("IG1", obj_name, ignore.case = TRUE)) {
-      sim_name <- "ITN"
-    } else if (grepl("IG2", obj_name, ignore.case = TRUE)) {
-      sim_name <- "Interceptor G2"
-    } else {
-      sim_name <- "Unknown Treatment"
-    }
-  }
+  # if (is.null(sim_name)) {
+  #   obj_name <- deparse(substitute(sim_results))
+  #   print(obj_name)
+  #   if (grepl("IG1", obj_name, ignore.case = TRUE)) {
+  #     sim_name <- "ITN"
+  #   } else if (grepl("IG2", obj_name, ignore.case = TRUE)) {
+  #     sim_name <- "Interceptor G2"
+  #   } else {
+  #     sim_name <- "Unknown Treatment"
+  #   }
+  # }
 
-  title_text <- paste0("Mean Reduction in VC by Species for ", sim_name, " (95% CI)")
+  title_text <- paste0("Mean Reduction in VC by Species (95% CI)")
+  #title_text <- paste0("Mean Reduction in VC by Species for ", sim_name, " (95% CI)")
 
   sim_results$name[sim_results$name == "Anopheles gambiae s.s."] <- "Anopheles gambiae s.s. / coluzzii"
-  palette_df <- read_csv(palette_path, show_col_types = FALSE)
+  palette_df <- read_data_file(file = "new_palette_density_plots.csv")
   palette_df$name[palette_df$name == "Anopheles gambiae s.s."] <- "Anopheles gambiae s.s. / coluzzii"
   palette_named <- setNames(palette_df$pal, palette_df$name)
 
@@ -301,16 +301,16 @@ plot_prcc_GENUS <- function(result_GENUS) {
                           levels = c("Endophagy", "Indoor HBI", "Sac rate", "Parous rate", "Resting Duration"))
     )
 
-  obj_name <- deparse(substitute(result_GENUS))
-  if (grepl("IG1", obj_name, ignore.case = TRUE)) {
-    sim_name <- "ITN"
-  } else if (grepl("IG2", obj_name, ignore.case = TRUE)) {
-    sim_name <- "Interceptor G2"
-  } else {
-    sim_name <- "Unknown Treatment"
-  }
+  # obj_name <- deparse(substitute(result_GENUS))
+  # if (grepl("IG1", obj_name, ignore.case = TRUE)) {
+  #   sim_name <- "ITN"
+  # } else if (grepl("IG2", obj_name, ignore.case = TRUE)) {
+  #   sim_name <- "Interceptor G2"
+  # } else {
+  #   sim_name <- "Unknown Treatment"
+  # }
 
-  title_text <- paste0("Partial Rank Correlation Coefficients (PRCC) — ", sim_name)
+  title_text <- paste0("Partial Rank Correlation Coefficients (PRCC)")
 
 
   colors <- c("#0072B2", "#E69F00", "#009E73", "#D55E00", "#CC79A7","#56B4E9")

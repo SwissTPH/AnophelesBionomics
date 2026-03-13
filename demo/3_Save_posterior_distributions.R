@@ -1,6 +1,6 @@
 library(AnophelesBionomics)
 library(dplyr)
-path_output  = "C:/Users/chamcl/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Bionomics_estimation_v5/Figures/"
+path_output  = ".
 
 
 species_simulations_all <- function(fit, SP, varname) {
