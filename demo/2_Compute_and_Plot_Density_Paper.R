@@ -1,7 +1,8 @@
 library(AnophelesBionomics)
 
-path_plot  = "C:/Users/chamcl/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Bionomics_estimation_v5/Figures/"
-path_excel = "C:/Users/chamcl/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Bionomics_estimation_v5/Figures/"
+path_main="C:/Users/chamcl/Swiss Tropical and Public Health Institute, Swiss TPH/Analytics and Intervention Modelling - AIM - Methodological development/1. Vector Control/Bionomics/Manuscript/Revision/"
+path_plot  = file.path(path_main,"Figures")
+path_excel =  file.path(path_main,"Analysis")
 
 varnames <- c("endophagy", "endophily", "indoor_HBI", "outdoor_HBI", "parous_rate", "sac_rate","resting_duration")
 output_dir <- path_plot
@@ -11,7 +12,7 @@ if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
 
 for (varname in varnames) {
   data <- creation_df(varname)
-  run_stan_result <- run_stan(data, iter = 3000)
+  run_stan_result <- run_stan(data, iter = 3000 , prob_HPD = 1)
   species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
   saveRDS(run_stan_result$stan_file, file = file.path(path_excel, paste0(varname,"_stanoutput.rds") ))
   #sum(sapply(rstan::get_sampler_params(run_stan_result$stan_file, inc_warmup = FALSE), function(x) sum(x[, "divergent__"])))
@@ -65,3 +66,4 @@ p <- plot_density(stan_results = run_stan_result,
 saveRDS(run_stan_result$stan_file, file = file.path(path_excel, "endophagy_WestAfrica_stanoutput.rds") )
 run_stan_result$varname="endophagy_WAfrica"
 species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
+

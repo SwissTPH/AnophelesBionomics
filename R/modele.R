@@ -115,6 +115,8 @@ extract_HPD_mcmc <- function(object, prob = 0.99) {
 #' @param iter Integer. Total number of MCMC iterations per chain (including warmup). Default is 2000.
 #' @param chains Integer. Number of MCMC chains. Default is 4.
 #' @param thinning Integer. Thinning interval for posterior samples. Default is 1.
+#' @param prob Numeric. The probability mass to include within the HPD interval.
+#' Default is `0.99`, corresponding to the 99% HPD region.
 #'
 #' @return A named list containing:
 #' \describe{
@@ -140,7 +142,7 @@ extract_HPD_mcmc <- function(object, prob = 0.99) {
 run_stan <- function(data = data,
                      iter = 3000,
                      chains = 4,
-                     thinning = 1) {
+                     thinning = 1, prob_HPD=0.99) {
 
   data_req <- data$data.req
   species_complex <- data$species_complex
@@ -182,7 +184,7 @@ run_stan <- function(data = data,
     )
   }
 
-  fit <- extract_HPD_mcmc(fit_rstan)
+  fit <- extract_HPD_mcmc(fit_rstan, prob = prob_HPD)
 
   list(
     fit = fit,

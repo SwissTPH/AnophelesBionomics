@@ -695,9 +695,12 @@ plot_density <- function(stan_results,
 
   density_plots <- cowplot::plot_grid(plotlist = p_list, ncol = 1, align = "v")
 
-  dens <- cowplot::plot_grid(common_legend, density_plots, title,
+  #dens <- cowplot::plot_grid(common_legend, density_plots, title,
+  #                           ncol = 1,
+  #                           rel_heights = c(0.1, 0.5, 0.1))
+  dens <- cowplot::plot_grid(density_plots, title,
                              ncol = 1,
-                             rel_heights = c(0.1, 0.5, 0.1))
+                             rel_heights = c(0.5, 0.1))
 
   nb_complex <- length(unique(df$higher_level[df$higher_level != "GENUS"]))
 

@@ -1,6 +1,6 @@
 library(AnophelesBionomics)
 library(dplyr)
-path_output  = ".
+path_output  = "."
 
 
 species_simulations_all <- function(fit, SP, varname) {

@@ -11,22 +11,19 @@ data {
 }
 
 parameters {
-  real beta0_raw;
+  real beta0;
 
   vector[N_complexes] z1;
   vector[N_species]  z2;
 
-  real<lower=0> tau0;
   real<lower=0> tau1;
   real<lower=0> tau2;
 }
 
 transformed parameters {
-  real beta0;
   vector[N_complexes] beta1;
   vector[N_species]  beta2;
 
-  beta0 = tau0 * beta0_raw;
   beta1 = beta0 + tau1 * z1;
 
   for (s in 1:N_species)
@@ -35,9 +32,8 @@ transformed parameters {
 
 model {
   // Priors
-  beta0_raw ~ normal(0, 1);
+  beta0 ~ normal(0, sqrt(3));
 
-  tau0 ~ normal(0, 1);
   tau1 ~ normal(0, 1);
   tau2 ~ normal(0, 0.5);
 
