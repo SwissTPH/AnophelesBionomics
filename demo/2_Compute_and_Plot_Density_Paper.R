@@ -67,3 +67,28 @@ saveRDS(run_stan_result$stan_file, file = file.path(path_excel, "endophagy_WestA
 run_stan_result$varname="endophagy_WAfrica"
 species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
 
+
+
+
+data <- creation_df("parous_rate",geo = c("Africa-E"))
+run_stan_result <- run_stan(data)
+p <- plot_density(stan_results = run_stan_result,
+                  complex_names = c("Gambiae","Funestus"),
+                  #path = "C:/Users/tarrau/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Demo/Output/density_endophagy_africa_E_partial.png",
+                  path = file.path(path_plot,"density_parous_rate_africa_E_partial.png"),
+                  unlabel = FALSE)
+saveRDS(run_stan_result$stan_file, file = file.path(path_excel, "parous_rate_EastAfrica_stanoutput.rds") )
+run_stan_result$varname="parous_rate_EAfrica"
+species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
+
+data <- creation_df("parous_rate",geo = c("Africa-W"))
+run_stan_result <- run_stan(data)
+p <- plot_density(stan_results = run_stan_result,
+                  complex_names = c("Gambiae","Funestus"),
+                  #path =  "C:/Users/tarrau/switchdrive/AIM/2. Methodological development/16. Bionomics using hierarchical model/2025/Demo/Output/density_endophagy_africa_W_partial.png",
+                  path = file.path(path_plot,"density_parous_rate_africa_W_partial.png"),
+                  unlabel = FALSE)
+saveRDS(run_stan_result$stan_file, file = file.path(path_excel, "parous_rate_WestAfrica_stanoutput.rds") )
+run_stan_result$varname="parous_rate_WAfrica"
+species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
+
