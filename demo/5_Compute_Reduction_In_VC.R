@@ -175,7 +175,7 @@ mosquitoes <- c("Anopheles gambiae s.s. / coluzzii",
                 "Anopheles ovengensis",
                 "Anopheles stephensi",
                 "Anopheles albimanus",
-                "Anopheles darlingi",
+                "Anopheles (Nyssorhyncus) darlingi",
                 "Anopheles minimus",
                 "GENUS"
 )

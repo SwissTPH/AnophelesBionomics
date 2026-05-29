@@ -11,6 +11,6 @@ varnames <- c("endophagy", "endophily", "indoor_HBI", "outdoor_HBI",
 for (var in varnames) {
   data <- creation_df(var)
   file_path <- paste0(path_plot, var, ".png")
-  p <- plot_lolipop (data, var, path = file_path)
+  p <- plot_lollipop (data, var, path = file_path)
   print(p)
 }

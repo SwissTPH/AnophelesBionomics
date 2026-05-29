@@ -58,7 +58,7 @@ Taxon_no;Subgenus;Section;Series;Group;Complex;taxon;Vector;Author;Subspecies
 490;Nyssorhynchus;Albimanus;Oswaldoi;Oswaldoi;Nuneztovar;Anopheles nuneztovari;TRUE;;
 492;Nyssorhynchus;Albimanus;Oswaldoi;Oswaldoi;Strodel;Anopheles arthuri;TRUE;;
 503;Nyssorhynchus;Argyritarsis;Albitarsus;Albitarsus;;Anopheles marajoara;TRUE;;
-507;Nyssorhynchus;Argyritarsis;Argyritarsis;Darlingi;;Anopheles darlingi;TRUE;;
+507;Nyssorhynchus;Argyritarsis;Argyritarsis;Darlingi;;Anopheles (Nyssorhyncus) darlingi;TRUE;;
 2;Anopheles;;;;;Anopheles confusa;FALSE;Bonne-Wepster 1951;
 3;Anopheles;;;;;Anopheles derooki;FALSE;Soesilo & Van Slooten 1931;
 4;Anopheles;;;;;Anopheles gracilis;FALSE;Theobald 1905;

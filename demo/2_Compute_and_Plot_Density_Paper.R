@@ -1,6 +1,6 @@
 library(AnophelesBionomics)
 
-path_main="C:/Users/chamcl/Swiss Tropical and Public Health Institute, Swiss TPH/Analytics and Intervention Modelling - AIM - Methodological development/1. Vector Control/Bionomics/Manuscript/Revision/"
+path_main="."
 path_plot  = file.path(path_main,"Figures")
 path_excel =  file.path(path_main,"Analysis")
 

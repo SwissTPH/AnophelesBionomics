@@ -117,7 +117,7 @@ plot_lollipop <- function(data, varname, path = NULL) {
   if (!is.null(path)) {
     if (!dir.exists(dirname(path))) dir.create(dirname(path), recursive = TRUE)
     ggplot2::ggsave(path, plot = combined,
-                    width = 10,
+                    width = 11,
                     height = length(p_list) * 2,
                     dpi = 300,
                     device = "png")
@@ -1297,7 +1297,7 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
                   "Gambiae","Anopheles arabiensis", "Anopheles gambiae s.s. / coluzzii",
                   "Anopheles jamesii", "Maculatus", "Nili",
                   "Punctulatus", "Anopheles farauti","Subpictus",
-                  "Anopheles albimanus", "Anopheles darlingi",
+                  "Anopheles albimanus", "Anopheles (Nyssorhyncus) darlingi",
                   "Anopheles kochi","Anopheles moucheti",
                   "Other")
 
