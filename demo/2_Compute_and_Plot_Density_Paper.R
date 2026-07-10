@@ -10,11 +10,30 @@ output_dir <- path_plot
 output_dir <- normalizePath(output_dir, winslash = "/", mustWork = FALSE)
 if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
 
+rerun=FALSE
+
 for (varname in varnames) {
+
   data <- creation_df(varname)
-  run_stan_result <- run_stan(data, iter = 3000 , prob_HPD = 1)
-  species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
-  saveRDS(run_stan_result$stan_file, file = file.path(path_excel, paste0(varname,"_stanoutput.rds") ))
+
+  if(rerun){
+    run_stan_result <- run_stan(data, iter = 3000 , prob_HPD = 1)
+    species_complex_result(run_stan_result, all = TRUE, output_dir = path_excel)
+    saveRDS(run_stan_result$stan_file, file = file.path(path_excel, paste0(varname,"_stanoutput.rds") ))
+  } else{
+    stan_file=readRDS(file = file.path(path_excel, paste0(varname,"_stanoutput.rds") ))
+    fit <- extract_HPD_mcmc(stan_file, prob = 1)
+
+    run_stan_result=list(
+      fit = fit,
+      stan_file=stan_file,
+      species_complex = data$species_complex,
+      nice_varname = data$nice_varname,
+      varname = varname
+    )
+  }
+
+
   #sum(sapply(rstan::get_sampler_params(run_stan_result$stan_file, inc_warmup = FALSE), function(x) sum(x[, "divergent__"])))
   complex_names_temp <- switch(
     varname,

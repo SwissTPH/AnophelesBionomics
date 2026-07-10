@@ -643,7 +643,15 @@ plot_density <- function(stan_results,
     #taxa_names <- paste0("*",base::unique(sub_df$name[sub_df$name != "GENUS"]),"*")
     taxa_names <- base::unique(sub_df$name[sub_df$name != "GENUS"])
     taxa_colors <- colors_map$pal[base::match(taxa_names, colors_map$name)]
-    taxa_names_italics <- ifelse(stringr::str_detect(taxa_names,"unlabeled"),taxa_names,paste0("*",taxa_names,"*"))
+    #taxa_names_italics <- ifelse(stringr::str_detect(taxa_names,"unlabeled"),taxa_names,paste0("*",taxa_names,"*"))
+
+    taxa_names_italics <- ifelse(
+      stringr::str_detect(taxa_names, "unlabeled"),
+      taxa_names,
+      paste0("*", gsub("Anopheles gambiae s.s. / coluzzii",
+                       "An. gambiae s.s. / An. coluzzii",
+                       taxa_names), "*")
+    )
 
     ggplot2::ggplot(sub_df) +
       ggplot2::geom_density(
@@ -1289,8 +1297,8 @@ Bionomics_For_AnopholesModel <- function() {
 #' @export
 multi_species_pie <- function(seuil_prop_autres = 0.05,
                               plot_dir = "path/to/your/folder/") {
-  varnames <- c("endophagy", "endophily",
-                "indoor_HBI", "outdoor_HBI", "parous_rate", "sac_rate", "resting_duration")
+  varnames <- c("endophagy", "endophily", "resting_duration",
+                "indoor_HBI", "outdoor_HBI", "parous_rate", "sac_rate")
 
   ordered_names=c("Albitarsis", "Annularis", "Barbirostris",
                   "Dirus", "Funestus","Anopheles funestus",
@@ -1301,6 +1309,15 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
                   "Anopheles kochi","Anopheles moucheti",
                   "Other")
 
+
+  ordered_names=c("Albitarsis", "Annularis", "Barbirostris",
+                  "Dirus", "Funestus","Anopheles funestus",
+                  "Gambiae","Anopheles arabiensis", "An. gambiae s.s. / An. coluzzii",
+                  "Anopheles jamesii", "Maculatus", "Nili",
+                  "Punctulatus", "Anopheles farauti","Subpictus",
+                  "Anopheles albimanus", "Anopheles (Nyssorhyncus) darlingi",
+                  "Anopheles kochi","Anopheles moucheti",
+                  "Other")
 
   colors_map <- read_data_file(file = "new_palette_density_plots.csv")
 
@@ -1355,6 +1372,8 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
         )
     }
 
+    data_clean$label=gsub("Anopheles gambiae s.s. / coluzzii", "An. gambiae s.s. / An. coluzzii",data_clean$label)
+
     data_clean <- data_clean |>
       dplyr::arrange(prop) |>
       dplyr::mutate(
@@ -1363,7 +1382,8 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
         label = factor(label, levels = label)
       )
 
-    data_clean$label_pct=gsub("Anopheles ", "Anopheles<br>",data_clean$label_pct )
+    #data_clean$label_pct=gsub("Anopheles ", "Anopheles<br>",data_clean$label_pct )
+    data_clean$label_pct=gsub("Anopheles ", "An.<br>",data_clean$label_pct )
     all_data_clean_list[[varname]] <<- data_clean
 
     ggplot2::ggplot(data_clean, ggplot2::aes(x = "", y = prop, fill = label)) +
@@ -1422,15 +1442,16 @@ multi_species_pie <- function(seuil_prop_autres = 0.05,
   legend <- cowplot::get_legend(legend_plot)
 
   empty_plot <- ggplot2::ggplot() + ggplot2::theme_void()
-  plots_with_empty <- c(plots, list(empty_plot))
-
-  plot_grid_final <- gridExtra::grid.arrange(
-    cowplot::plot_grid(plotlist = plots_with_empty, ncol = 2, nrow = 4,
-                       rel_widths = c(1, 1), rel_heights = rep(1.2, 4), hjust = 0),
-    legend,
-    ncol = 2,
-    widths = c(1.9, 1.1)
+  plots_with_empty <- c(
+    plots[1:3],        # row 1
+    plots[4:5],        # row 2: first two
+    list(empty_plot),   # row 2: legend in slot 6
+    plots[6:7],        # row 3: first two
+    list(legend)   # row 3: empty slot 9
   )
+
+
+  plot_grid_final <- cowplot::plot_grid(plotlist = plots_with_empty, ncol = 3, nrow = 3)
 
   outfile <- base::file.path(plot_dir, "multi_species_piechart.png")
   ggplot2::ggsave(outfile, plot = plot_grid_final, width = 40, height = 40, dpi = 300)

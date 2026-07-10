@@ -65,11 +65,14 @@ plot_vcc_results <- function(sim_results,
   # }
 
   title_text <- paste0("Mean Reduction in VC by Species (95% CI)")
+  title_text <- paste0("")
   #title_text <- paste0("Mean Reduction in VC by Species for ", sim_name, " (95% CI)")
 
-  sim_results$name[sim_results$name == "Anopheles gambiae s.s."] <- "Anopheles gambiae s.s. / coluzzii"
+  sim_results$name[sim_results$name == "Anopheles gambiae s.s."] <- "An. gambiae s.s. / An. coluzzii"
+  sim_results$name[sim_results$name == "Anopheles gambiae s.s. / coluzzii"] <- "An. gambiae s.s. / An. coluzzii"
   palette_df <- read_data_file(file = "new_palette_density_plots.csv")
-  palette_df$name[palette_df$name == "Anopheles gambiae s.s."] <- "Anopheles gambiae s.s. / coluzzii"
+  palette_df$name[palette_df$name == "Anopheles gambiae s.s."] <- "An. gambiae s.s. / An. coluzzii"
+  palette_df$name[palette_df$name == "Anopheles gambiae s.s. / coluzzii"] <- "An. gambiae s.s. / An. coluzzii"
   palette_named <- setNames(palette_df$pal, palette_df$name)
 
   #sim_results$name2=ifelse(sim_results$name=="GENUS", sim_results$name,
@@ -147,7 +150,7 @@ plot_vcc_results <- function(sim_results,
       geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.3) +
       coord_flip() +
       labs(
-        title = title_text,
+        #title = title_text,
         x = "Mosquito Species",
         y = "Reduction in VC"
       ) +
@@ -165,7 +168,7 @@ plot_vcc_results <- function(sim_results,
 }
 
 
-mosquitoes <- c("Anopheles gambiae s.s. / coluzzii",
+mosquitoes <- c("An. gambiae s.s. / An. coluzzii",
                 "Anopheles arabiensis",
                 "Anopheles funestus",
                 "Anopheles merus",
