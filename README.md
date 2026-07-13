@@ -10,6 +10,10 @@ AnophelesBionomics supports both internal and user-provided datasets. It also in
 
 The package depends on several R libraries for core functionality, including `stats`, `dplyr`, `ggplot2`, `rstan`, `plotly`, `coda`, `htmlwidgets`, `shiny`, `cowplot`, `rlang`, `stringr`, and `tidyr`.
 
+This work is associated with the following article:
+[Estimating mosquito bionomics parameters with a hierarchical Bayesian model](https://www.sciencedirect.com/science/article/pii/S2667114X26000671)             
+Lemant, Tarroux, Smith, Zogo, Golumbeanu, Odufuwa, Irish, Moore, Pothin, Champagne, *Current Research in Parasitology & Vector-Borne Diseases*, 2026
+
 ## Installation
 
 To install the package:
